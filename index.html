@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>American Uncle — Franchise Knowledge Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ── RESET & TOKENS ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { background: #09080A; color: #F5F0E8; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+:root {
+  --ink:   #09080A;
+  --raise: #121016;
+  --card:  #1A1720;
+  --red:   #D4291C;
+  --amber: #E8921A;
+  --white: #F5F0E8;
+  --sage:  #2D9C6E;
+  --muted: rgba(245,240,232,0.38);
+  --dim:   rgba(245,240,232,0.12);
+  --rule:  rgba(245,240,232,0.07);
+  --max:   1160px;
+}
+
+::selection { background: var(--red); color: var(--white); }
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-thumb { background: var(--red); }
+::-webkit-scrollbar-track { background: var(--ink); }
+img { display: block; }
+
+/* ── TYPOGRAPHY ──────────────────────────────────────────────────────── */
+.f-display { font-family: 'Bebas Neue', cursive; letter-spacing: 0.02em; line-height: 0.88; }
+.f-sans    { font-family: 'DM Sans', sans-serif; }
+.f-mono    { font-family: 'JetBrains Mono', monospace; }
+.f-italic  { font-family: 'Playfair Display', serif; font-style: italic; }
+
+/* ── LAYOUT ──────────────────────────────────────────────────────────── */
+.wrap { max-width: var(--max); margin: 0 auto; padding: 96px 56px; }
+.wrap-hero { max-width: var(--max); margin: 0 auto; padding: 80px 56px 72px; }
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+@media (max-width: 900px) { .g2 { grid-template-columns: 1fr; gap: 48px; } .wrap, .wrap-hero { padding: 64px 24px; } }
+
+/* ── ANIMATIONS ──────────────────────────────────────────────────────── */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s cubic-bezier(.16,1,.3,1); }
+.fade-in.visible { opacity: 1; transform: none; }
+.fade-in[data-delay="1"] { transition-delay: .08s; }
+.fade-in[data-delay="2"] { transition-delay: .16s; }
+.fade-in[data-delay="3"] { transition-delay: .24s; }
+.fade-in[data-delay="4"] { transition-delay: .32s; }
+.fade-in[data-delay="5"] { transition-delay: .40s; }
+.fade-in[data-delay="6"] { transition-delay: .48s; }
+.clip-in { clip-path: inset(100% 0 0 0); transition: clip-path .85s cubic-bezier(.16,1,.3,1); }
+.clip-in.visible { clip-path: inset(0 0 0 0); }
+.bar-fill { width: 0 !important; transition: width 1s cubic-bezier(.16,1,.3,1) .2s; }
+.bar-fill.visible { width: var(--bar-w) !important; }
+
+/* ── NAV ─────────────────────────────────────────────────────────────── */
+#nav {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(9,8,10,.92); backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--rule);
+  height: 52px; display: flex; align-items: stretch;
+}
+#nav .logo-zone {
+  display: flex; align-items: center; padding: 0 28px;
+  border-right: 1px solid var(--rule); flex-shrink: 0;
+}
+#nav .logo-zone img { height: 20px; filter: brightness(0) invert(1); opacity: .6; }
+#nav .logo-zone .logo-fallback { font-family: 'Bebas Neue',cursive; font-size: 16px; color: var(--white); opacity: .6; letter-spacing: .06em; }
+#nav .nav-items { display: flex; align-items: stretch; flex: 1; overflow-x: auto; padding: 0 8px; }
+#nav .nav-items::-webkit-scrollbar { display: none; }
+#nav .nav-btn {
+  display: flex; align-items: center; padding: 0 16px;
+  background: none; border: none; cursor: pointer;
+  border-bottom: 2px solid transparent; border-top: 2px solid transparent;
+  white-space: nowrap; transition: all .2s; text-decoration: none;
+}
+#nav .nav-btn span { font-family: 'DM Sans',sans-serif; font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .06em; transition: color .2s; }
+#nav .nav-btn.active { border-bottom-color: var(--amber); }
+#nav .nav-btn.active span { color: var(--amber); font-weight: 700; }
+#nav .nav-btn.au-btn.active { border-bottom-color: var(--red); }
+#nav .nav-btn.au-btn.active span { color: var(--red); }
+#nav .badge { display: flex; align-items: center; padding: 0 24px; border-left: 1px solid var(--rule); flex-shrink: 0; }
+#nav .badge span { font-family: 'JetBrains Mono',monospace; font-size: 9px; color: var(--red); font-weight: 700; letter-spacing: .1em; }
+
+/* ── MARQUEE ─────────────────────────────────────────────────────────── */
+.marquee-wrap { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: var(--raise); overflow: hidden; padding: 10px 0; }
+.marquee-track { display: flex; animation: mq 30s linear infinite; white-space: nowrap; }
+.marquee-track span { font-family: 'DM Sans',sans-serif; font-size: 10px; color: var(--dim); letter-spacing: .18em; text-transform: uppercase; padding: 0 32px; }
+@keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTIONS ────────────────────────────────────────────────────────── */
+section { border-top: 1px solid var(--rule); }
+section.raise { background: var(--raise); }
+section.au-cta { border-top: 3px solid var(--red); background: var(--ink); min-height: 60vh; display: flex; align-items: center; }
+section.au-cta .wrap { width: 100%; }
+
+/* ── SECTION HEADER ──────────────────────────────────────────────────── */
+.sh { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
+.sh .n { font-family: 'JetBrains Mono',monospace; font-size: 11px; color: var(--red); font-weight: 700; letter-spacing: .06em; }
+.sh .line { width: 40px; height: 1.5px; background: var(--red); flex-shrink: 0; }
+.sh .lbl { font-family: 'DM Sans',sans-serif; font-size: 10px; color: var(--muted); letter-spacing: .2em; text-transform: uppercase; font-weight: 600; }
+
+/* ── DISPLAY TITLE ───────────────────────────────────────────────────── */
+.dt { font-family: 'Bebas Neue',cursive; letter-spacing: .02em; line-height: .88; margin-bottom: 40px; }
+.dt-lg { font-size: clamp(52px, 6.5vw, 88px); }
+.dt-xl { font-size: clamp(64px, 9vw, 120px); }
+.dt-md { font-size: clamp(44px, 5.5vw, 72px); }
+.t-red   { color: var(--red); }
+.t-amber { color: var(--amber); }
+.t-muted { color: var(--muted); }
+.t-sage  { color: var(--sage); }
+.t-white { color: var(--white); }
+.t-stroke-red { -webkit-text-stroke: 1.5px var(--red); color: transparent; }
+
+/* ── DATA LABEL ──────────────────────────────────────────────────────── */
+.lbl {
+  font-family: 'DM Sans',sans-serif; font-size: 10px;
+  color: var(--muted); font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 6px; display: block;
+}
+.lbl.amber { color: rgba(232,146,26,.7); }
+.lbl.red   { color: rgba(212,41,28,.7); }
+.lbl.sage  { color: rgba(45,156,110,.7); }
+
+/* ── BIG STAT ────────────────────────────────────────────────────────── */
+.big-stat { padding: 32px 0; border-bottom: 1px solid var(--rule); }
+.big-stat.border-top { border-top: 1px solid var(--rule); }
+.big-stat .val { font-family: 'Bebas Neue',cursive; font-size: clamp(44px,5.5vw,72px); line-height: .9; margin-bottom: 10px; }
+.big-stat .val.amber { color: var(--amber); }
+.big-stat .val.red   { color: var(--red); }
+.big-stat .val.sage  { color: var(--sage); }
+.big-stat .val.white { color: var(--white); }
+.big-stat .lbl-v { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:var(--white); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+.big-stat .note { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); line-height:1.6; max-width:340px; margin-top:6px; }
+
+/* ── DATA ROW ────────────────────────────────────────────────────────── */
+.dr { padding: 11px 0; border-bottom: 1px solid var(--rule); }
+.dr .dr-inner { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0; }
+.dr.has-bar .dr-inner { margin-bottom: 7px; }
+.dr .dr-label { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); }
+.dr .dr-label.bold { color:var(--white); font-weight:600; }
+.dr .dr-value { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
+.dr .dr-bar-bg { height:2px; background:var(--rule); border-radius:1px; overflow:hidden; }
+.dr .dr-bar { height:100%; border-radius:1px; }
+
+/* ── CARD ────────────────────────────────────────────────────────────── */
+.card { background:var(--card); border-left:3px solid var(--amber); border-radius:0 4px 4px 0; padding:22px 24px; }
+.card.red   { border-left-color: var(--red); }
+.card.amber { border-left-color: var(--amber); }
+.card.sage  { border-left-color: var(--sage); }
+.card.muted { border-left-color: rgba(245,240,232,.2); }
+.card .card-title { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; margin-bottom:6px; }
+.card .card-body  { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); line-height:1.7; }
+.card.amber .card-title { color:var(--amber); }
+.card.red   .card-title { color:var(--red); }
+.card.sage  .card-title { color:var(--sage); }
+.card.muted .card-title { color:var(--muted); }
+
+/* ── ALERT ───────────────────────────────────────────────────────────── */
+.alert { display:flex; gap:18px; align-items:flex-start; margin-top:24px; }
+.alert .alert-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+.alert .alert-title { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:7px; }
+.alert .alert-body  { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); line-height:1.75; }
+
+/* ── BOX (card with top color) ───────────────────────────────────────── */
+.box { background:var(--card); border:1px solid var(--rule); border-radius:4px; overflow:hidden; }
+.box-header { padding:12px 20px; border-bottom:1px solid var(--rule); }
+
+/* ── TABLE ───────────────────────────────────────────────────────────── */
+table { width:100%; border-collapse:collapse; }
+th { font-family:'DM Sans',sans-serif; font-size:10px; color:var(--muted); font-weight:700; letter-spacing:.16em; text-transform:uppercase; padding:8px 14px 12px; text-align:left; border-bottom:1px solid var(--dim); }
+th:not(:first-child) { text-align:right; }
+td { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); padding:12px 14px; border-bottom:1px solid var(--rule); text-align:left; }
+td:not(:first-child) { text-align:right; font-family:'JetBrains Mono',monospace; color:var(--amber); }
+tr.hl td { background: rgba(232,146,26,.06); }
+tr.hl td:first-child { color:var(--white); font-weight:700; }
+tr.hl td:not(:first-child) { color:var(--amber); font-weight:700; }
+
+/* ── TIER CARD ───────────────────────────────────────────────────────── */
+.tier-card { background:var(--card); border:1px solid var(--rule); border-radius:0 0 4px 4px; padding:32px 28px; }
+.tier-card .tier-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; }
+.tier-card .tier-num { font-family:'Bebas Neue',cursive; font-size:64px; line-height:.85; }
+.tier-card .tier-badge { border:1px solid; border-radius:3px; padding:5px 12px; flex-shrink:0; }
+.tier-card .tier-badge span { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+.tier-card .tier-desc { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); line-height:1.7; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid var(--rule); }
+.tier-card .tier-grid { display:grid; grid-template-columns:1fr 1fr; gap:0 24px; }
+.tier-card .tier-item { padding-top:14px; }
+.tier-card .tier-item:nth-child(n+3) { border-top:1px solid var(--rule); margin-top:14px; }
+.tier-card .tier-item-val { font-family:'JetBrains Mono',monospace; font-size:17px; font-weight:700; line-height:1.1; }
+
+/* ── ROYALTY ROW ─────────────────────────────────────────────────────── */
+.royalty-row { display:grid; grid-template-columns:72px 1fr 2fr; gap:0 16px; padding:14px 20px; border-bottom:1px solid var(--rule); align-items:start; }
+.royalty-row:last-child { border-bottom:none; }
+.royalty-row.hl { background:rgba(232,146,26,.06); }
+.royalty-row .r-pct { font-family:'Bebas Neue',cursive; font-size:28px; line-height:1; padding-top:2px; color:var(--muted); }
+.royalty-row.hl .r-pct { color:var(--amber); }
+.royalty-row .r-label { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:var(--muted); line-height:1.5; }
+.royalty-row.hl .r-label { color:var(--white); }
+.royalty-row .r-note { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); line-height:1.6; }
+
+/* ── SCENARIO CARD ───────────────────────────────────────────────────── */
+.scenario-card { border:1px solid var(--rule); border-radius:0 4px 4px 0; padding:20px 22px; margin-bottom:10px; }
+.scenario-card .sc-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+.scenario-card .sc-fat { font-family:'Bebas Neue',cursive; font-size:34px; line-height:1; }
+.scenario-card .sc-ebitda { font-family:'Bebas Neue',cursive; font-size:30px; line-height:1; }
+.scenario-card .sc-badge { font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:3px 10px; border-radius:2px; }
+.scenario-card .sc-util { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.scenario-card .sc-util-val { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; }
+.scenario-card .sc-note { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); line-height:1.65; border-top:1px solid var(--rule); padding-top:10px; }
+
+/* ── LEGAL ITEM ──────────────────────────────────────────────────────── */
+.legal-item { display:flex; gap:20px; padding:22px 0; border-bottom:1px solid var(--rule); }
+.legal-item .legal-n { width:30px; height:30px; border-radius:3px; border:1px solid rgba(232,146,26,.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.legal-item.risk .legal-n { border-color:rgba(212,41,28,.35); }
+.legal-item .legal-n span { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--amber); font-weight:700; }
+.legal-item.risk .legal-n span { color:var(--red); }
+.legal-item .legal-title { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:var(--amber); margin-bottom:7px; }
+.legal-item.risk .legal-title { color:var(--red); }
+.legal-item .legal-body { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); line-height:1.75; }
+
+/* ── STRIP (multi-col data) ──────────────────────────────────────────── */
+.strip { background:var(--card); border:1px solid var(--rule); border-radius:4px; padding:24px; }
+.strip-grid { display:grid; gap:0; }
+.strip-grid-4 { grid-template-columns:repeat(4,1fr); }
+.strip-grid-3 { grid-template-columns:repeat(3,1fr); }
+.strip-item { padding-right:16px; border-right:1px solid var(--rule); }
+.strip-item:last-child { border-right:none; }
+.strip-item .s-val { font-family:'Bebas Neue',cursive; font-size:28px; line-height:1; margin-bottom:6px; }
+.strip-item .s-lbl { font-family:'DM Sans',sans-serif; font-size:10px; color:var(--muted); line-height:1.5; }
+
+/* ── HERO ────────────────────────────────────────────────────────────── */
+.hero-tags { display:grid; grid-template-columns:1fr 1fr; gap:4px; }
+.hero-tag { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--raise); border:1px solid var(--rule); border-radius:3px; cursor:pointer; text-decoration:none; transition:border-color .2s; }
+.hero-tag:hover { border-color:var(--dim); }
+.hero-tag span { font-family:'DM Sans',sans-serif; font-size:11px; color:var(--muted); font-weight:500; }
+.hero-tag .arr { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--dim); }
+
+/* ── PROCEDURE ───────────────────────────────────────────────────────── */
+.proc-item { display:flex; gap:18px; padding:16px 0; border-bottom:1px solid var(--rule); }
+.proc-item:last-child { border-bottom:none; }
+.proc-item .proc-n { font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--amber); font-weight:700; line-height:1; flex-shrink:0; min-width:36px; }
+.proc-item .proc-title { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:var(--amber); margin-bottom:5px; }
+.proc-item .proc-body  { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--muted); line-height:1.7; }
+
+/* ── FOOTER ──────────────────────────────────────────────────────────── */
+.footer-bar { display:flex; justify-content:space-between; align-items:center; margin-top:64px; padding-top:36px; border-top:1px solid var(--rule); }
+.footer-bar img { height:22px; filter:brightness(0) invert(1); opacity:.3; }
+.footer-bar .footer-logo-text { font-family:'Bebas Neue',cursive; font-size:18px; color:var(--white); opacity:.3; }
+.footer-bar .footer-date { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--dim); letter-spacing:.12em; text-transform:uppercase; }
+
+/* ── UTIL ────────────────────────────────────────────────────────────── */
+.mb8 { margin-bottom:8px; }
+.mb12 { margin-bottom:12px; }
+.mb16 { margin-bottom:16px; }
+.mb20 { margin-bottom:20px; }
+.mb24 { margin-bottom:24px; }
+.mt4  { margin-top:4px; }
+.mt12 { margin-top:12px; }
+.mt14 { margin-top:14px; }
+.mt16 { margin-top:16px; }
+.mt20 { margin-top:20px; }
+.mt24 { margin-top:24px; }
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.grid2-sm { display:grid; grid-template-columns:1fr 1fr; gap:4px; }
+@media (max-width:700px) { .grid3 { grid-template-columns:1fr; } .strip-grid-4 { grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="logo-zone">
+    <img src="https://americanuncle.it/cdn/shop/files/logo-american-uncle-nuovo.png" alt="American Uncle"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+    <span class="logo-fallback" style="display:none;">AMERICAN UNCLE</span>
+  </div>
+  <div class="nav-items">
+    <a href="#mercato"   class="nav-btn" data-section="mercato">  <span>Mercato</span></a>
+    <a href="#benchmark" class="nav-btn" data-section="benchmark"><span>Benchmark</span></a>
+    <a href="#economics" class="nav-btn" data-section="economics"><span>Unit Economics</span></a>
+    <a href="#geo"       class="nav-btn" data-section="geo">      <span>Geomarketing</span></a>
+    <a href="#capex"     class="nav-btn" data-section="capex">    <span>Allestimento</span></a>
+    <a href="#leadgen"   class="nav-btn" data-section="leadgen">  <span>Lead Gen</span></a>
+    <a href="#legale"    class="nav-btn" data-section="legale">   <span>Legale</span></a>
+    <a href="#au"        class="nav-btn au-btn" data-section="au"><span>American Uncle →</span></a>
+  </div>
+  <div class="badge"><span>APR 2026</span></div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+<div class="wrap-hero">
+  <div class="fade-in" style="display:flex;align-items:center;gap:14px;margin-bottom:32px;">
+    <div style="width:24px;height:1.5px;background:var(--red);"></div>
+    <span style="font-size:10px;color:var(--red);font-weight:700;letter-spacing:.2em;text-transform:uppercase;">Franchise Knowledge Base · Uso Interno Riservato</span>
+  </div>
+  <div class="clip-in">
+    <h1 class="dt dt-xl">TUTTO IL<br>CONTESTO<br><span class="t-red">PRIMA</span><br>DI DECIDERE.</h1>
+  </div>
+  <div class="g2 fade-in" data-delay="2">
+    <p style="font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;">
+      7 sezioni di ricerca approfondita su mercato, benchmark, unit economics, geomarketing, costi di allestimento, lead generation e quadro legale. La base di conoscenza da cui partire per deliberare il modello American Uncle.
+    </p>
+    <div class="hero-tags">
+      <a href="#mercato"   class="hero-tag"><span>Mercato</span><span class="arr">→</span></a>
+      <a href="#benchmark" class="hero-tag"><span>Benchmark</span><span class="arr">→</span></a>
+      <a href="#economics" class="hero-tag"><span>Unit Economics</span><span class="arr">→</span></a>
+      <a href="#geo"       class="hero-tag"><span>Geomarketing</span><span class="arr">→</span></a>
+      <a href="#capex"     class="hero-tag"><span>Allestimento</span><span class="arr">→</span></a>
+      <a href="#leadgen"   class="hero-tag"><span>Lead Gen</span><span class="arr">→</span></a>
+      <a href="#legale"    class="hero-tag"><span>Legale</span><span class="arr">→</span></a>
+      <a href="#au"        class="hero-tag"><span>American Uncle</span><span class="arr" style="color:var(--red);">→</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Mercato</span><span>Benchmark</span><span>Unit Economics</span><span>Geomarketing</span>
+    <span>Allestimento</span><span>Lead Generation</span><span>Quadro Legale</span><span>American Uncle</span>
+    <span>Mercato</span><span>Benchmark</span><span>Unit Economics</span><span>Geomarketing</span>
+    <span>Allestimento</span><span>Lead Generation</span><span>Quadro Legale</span><span>American Uncle</span>
+  </div>
+</div>
+
+<!-- ══ S1 MERCATO ════════════════════════════════════════════════════════ -->
+<section id="mercato">
+  <div class="wrap">
+    <div class="sh fade-in"><span class="n">01</span><div class="line"></div><span class="lbl">Il Mercato — Contesto Italia 2026</span></div>
+    <div class="g2">
+      <div>
+        <div class="clip-in">
+          <h2 class="dt dt-lg">IL RETAIL<br>FISICO<br><span class="t-red">MUORE.</span><br>IL FRANCHISING<br>AVANZA.</h2>
+        </div>
+        <p class="fade-in" data-delay="1" style="font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:20px;">
+          Il mercato del retail alimentare italiano vale <strong style="color:var(--white)">€179,5 miliardi</strong> nel 2024. Storicamente frammentato, sta vivendo la più rapida trasformazione strutturale degli ultimi 30 anni: il commercio indipendente crolla, le reti organizzate avanzano.
+        </p>
+        <p class="fade-in" data-delay="2" style="font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:32px;">
+          I locali liberi generati dalle chiusure si trovano in posizioni prime, a canoni più accessibili. La finestra per lanciare nuovi format in affiliazione è <strong style="color:var(--white);font-style:normal;">aperta adesso</strong>.
+        </p>
+        <div class="card amber fade-in" data-delay="3">
+          <div class="card-title">★ Il moltiplicatore economico del franchising</div>
+          <div class="card-body">Ogni euro investito in affiliazione commerciale genera 2,8 euro di ricaduta sull'economia italiana. Il franchising non è un'alternativa all'imprenditoria: è la forma più sicura di fare impresa in Italia nel 2026.</div>
+        </div>
+      </div>
+      <div class="fade-in" data-delay="1">
+        <div class="big-stat border-top">
+          <span class="lbl">Fatturato franchising Italia 2024</span>
+          <div class="val amber">€35,8 MLD</div>
+          <div class="note">+5,4% sul 2023. Fonte: Rapporto Assofranchising / Nomisma.</div>
+        </div>
+        <div class="big-stat">
+          <span class="lbl">Calo annuo retail indipendente</span>
+          <div class="val red">−2,8%</div>
+          <div class="note">539.789 negozi rimasti. 85.000 chiusi nell'ultimo decennio.</div>
+        </div>
+        <div class="big-stat">
+          <span class="lbl">Store in affiliazione attivi</span>
+          <div class="val amber">67.275</div>
+          <div class="note">+2,2% YoY. 293.791 occupati diretti (+2,1%). 931 franchisor (+0,2%).</div>
+        </div>
+        <div class="big-stat">
+          <span class="lbl">E-commerce food & grocery</span>
+          <div class="val sage">+7%</div>
+          <div class="note">€62,3 miliardi. La domanda digitale alimenta la ricerca di punti fisici.</div>
+        </div>
+        <div class="big-stat">
+          <span class="lbl">Reti con affiliati multi-unit</span>
+          <div class="val amber">80%</div>
+          <div class="note">Otto franchisor su dieci hanno imprenditori che gestiscono più store.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S2 BENCHMARK ══════════════════════════════════════════════════════ -->
+<section id="benchmark" class="raise">
+  <div class="wrap">
+    <div class="sh fade-in"><span class="n">02</span><div class="line"></div><span class="lbl">Benchmark — Gli Standard del Settore</span></div>
+    <div class="g2">
+      <div>
+        <div class="clip-in">
+          <h2 class="dt dt-lg">I NUMERI<br>CHE SEPARANO<br><span class="t-amber">UN BUON</span><br>DEAL DA UNO<br><span class="t-red">CATTIVO.</span></h2>
+        </div>
+        <p class="fade-in" data-delay="1" style="font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:28px;">
+          Il mercato del franchising food leggero ha standard precisi. Uscire da questi range in un senso o nell'altro è la principale causa di fallimento delle reti nascenti.
+        </p>
+        <div class="box fade-in" data-delay="2" style="margin-bottom:24px;">
+          <div class="box-header"><span class="lbl amber">Golden Standard — Format 40–80 mq no cucina</span></div>
+          <div style="padding:0 4px;">
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label bold">EBITDA affiliato — soglia minima</span><span class="dr-value" style="color:var(--amber);">10–12%</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:12%;background:var(--amber);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label bold">EBITDA affiliato — target sano</span><span class="dr-value" style="color:var(--sage);">15–18%</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:18%;background:var(--sage);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Payback period — range attrattivo</span><span class="dr-value" style="color:var(--amber);">24–36 mesi</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:65%;background:var(--amber);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Payback period — limite massimo</span><span class="dr-value" style="color:var(--red);">48 mesi</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:90%;background:var(--red);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Fee affiliazione — fascia comune</span><span class="dr-value" style="color:var(--amber);">€8k–€12k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:40%;background:var(--amber);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Royalty — range fisiologico</span><span class="dr-value" style="color:var(--amber);">3%–6%</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:55%;background:var(--amber);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Contributo marketing</span><span class="dr-value" style="color:var(--sage);">1%–3%</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:28%;background:var(--sage);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Break-even mensile (store standard)</span><span class="dr-value" style="color:var(--amber);">€25k–€30k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:55%;background:var(--amber);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">CAPEX ingresso tipico</span><span class="dr-value" style="color:var(--amber);">€30k–€80k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:45%;background:var(--amber);"></div></div></div>
+          </div>
+        </div>
+        <div class="card red alert fade-in" data-delay="3">
+          <span class="alert-icon">!</span>
+          <div>
+            <div class="alert-title" style="color:var(--red);">Regola d'oro: mai oltre il 25–30% del MOL in fee</div>
+            <div class="alert-body">Royalty + marketing + altri prelievi non devono mai erodere più del 25–30% del Margine Operativo Lordo. Superare questa soglia allunga il payback oltre 48 mesi e rende il format non competitivo.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="box fade-in" data-delay="1" style="margin-bottom:20px;">
+          <div class="box-header"><span class="lbl">Fee affiliazione — Range Italia 2026</span></div>
+          <table>
+            <thead><tr><th>Fascia di mercato</th><th>Fee una tantum</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr><td>Reti emergenti / launch</td><td>€0–€5.000</td><td>Sacrificano la fee per crescere in fretta</td></tr>
+              <tr class="hl"><td>Brand con pilota validato</td><td>€5.000–€10.000</td><td>Fascia più diffusa per format validati</td></tr>
+              <tr><td>Brand consolidato nazionale</td><td>€10.000–€20.000</td><td>Premium per brand awareness consolidata</td></tr>
+              <tr><td>Leader di mercato</td><td>€25.000–€50.000+</td><td>Reti con decenni di storia consolidata</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="box fade-in" data-delay="2" style="margin-bottom:20px;">
+          <div class="box-header"><span class="lbl">Royalty — Analisi per fascia</span></div>
+          <div class="royalty-row"><span class="r-pct">3%</span><span class="r-label">Reti emergenti</span><span class="r-note">Casa Madre guadagna già sul markup. Royalty calmierata per non pesare due volte.</span></div>
+          <div class="royalty-row hl"><span class="r-pct">4–5%</span><span class="r-label">Standard ottimale</span><span class="r-note">Equilibrio tra sostenibilità affiliato e copertura costi HQ. Il punto di convergenza del mercato.</span></div>
+          <div class="royalty-row"><span class="r-pct">5–6%</span><span class="r-label">Brand consolidato</span><span class="r-note">Giustificata solo con audit frequenti, BI dashboard, innovazione prodotto continua.</span></div>
+          <div class="royalty-row"><span class="r-pct" style="color:var(--red);">>6%</span><span class="r-label">Soglia di allarme</span><span class="r-note">Payback >48 mesi. Non competitivo vs alternative di investimento. Alto tasso abbandono.</span></div>
+        </div>
+        <div class="strip fade-in" data-delay="3">
+          <span class="lbl" style="margin-bottom:16px;">Multi-Unit Franchising — Il modello dominante</span>
+          <div class="strip-grid strip-grid-4" style="margin-top:16px;">
+            <div class="strip-item"><div class="s-val" style="color:var(--amber);">80%</div><div class="s-lbl">reti con multi-affiliati</div></div>
+            <div class="strip-item"><div class="s-val" style="color:var(--sage);">10–12%</div><div class="s-lbl">EBITDA soglia 2° store</div></div>
+            <div class="strip-item"><div class="s-val" style="color:var(--amber);">18–24m</div><div class="s-lbl">payback target espansione</div></div>
+            <div class="strip-item" style="border-right:none;"><div class="s-val" style="color:var(--muted);">3+</div><div class="s-lbl">store medi per multi-operator</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S3 UNIT ECONOMICS ════════════════════════════════════════════════ -->
+<section id="economics">
+  <div class="wrap">
+    <div class="sh fade-in"><span class="n">03</span><div class="line"></div><span class="lbl">Unit Economics — Il Conto Economico dell'Affiliato</span></div>
+    <div class="g2">
+      <div>
+        <div class="clip-in">
+          <h2 class="dt dt-lg">QUANTO<br>PORTA A CASA<br><span class="t-amber">L'AFFILIATO</span><br>DAVVERO.</h2>
+        </div>
+        <p class="fade-in" data-delay="1" style="font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:28px;">
+          Il conto economico reale va letto con il concetto di <strong style="color:var(--white);">EBITDA normalizzato</strong>: se il titolare lavora in negozio, il suo costo di lavoro (€35k–€40k/anno) va sottratto dall'utile prima di valutare la profittabilità reale.
+        </p>
+        <div class="box fade-in" data-delay="2" style="margin-bottom:20px;">
+          <div class="box-header"><span class="lbl amber">P&L tipo — Format 40–80 mq · Fatturato €200k</span></div>
+          <div style="padding:0 4px;">
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label bold">Ricavi lordi</span><span class="dr-value" style="color:var(--white);">€200.000</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:100%;background:rgba(245,240,232,.25);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">COGS — Costo prodotti (45–52%)</span><span class="dr-value" style="color:var(--red);">−€90k–€104k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:48%;background:var(--red);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label bold">Margine Lordo (48–55%)</span><span class="dr-value" style="color:var(--amber);">€96k–€110k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:52%;background:var(--amber);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Affitto (max 15% fatturato)</span><span class="dr-value" style="color:var(--red);">−€24k–€30k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:15%;background:var(--red);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Personale (35–40% fatturato)</span><span class="dr-value" style="color:var(--red);">−€70k–€80k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:38%;background:var(--red);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Utility, POS, misc (7–9%)</span><span class="dr-value" style="color:var(--red);">−€14k–€18k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:8%;background:var(--red);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">Royalty (5%) + Marketing (1–2%)</span><span class="dr-value" style="color:var(--red);">−€12k–€14k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:6%;background:var(--red);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label bold">EBITDA lordo</span><span class="dr-value" style="color:var(--muted);">−€24k → +€14k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:7%;background:var(--muted);"></div></div></div>
+            <div class="dr has-bar"><div class="dr-inner"><span class="dr-label">(−) Store Manager normalizzato</span><span class="dr-value" style="color:var(--red);">−€35k–€40k</span></div><div class="dr-bar-bg"><div class="dr-bar bar-fill" style="--bar-w:19%;background:var(--red);"></div></div></div>
+            <div class="dr"><div class="dr-inner"><span class="dr-label bold">EBITDA normalizzato (il vero utile)</span><span class="dr-value" style="color:var(--sage);">dipende dal volume</span></div></div>
+          </div>
+        </div>
+        <div class="card red alert fade-in" data-delay="3">
+          <span class="alert-icon">!</span>
+          <div>
+            <div class="alert-title" style="color:var(--red);">L'EBITDA normalizzato è l'unico numero che conta</div>
+            <div class="alert-body">Un affiliato che lavora 6 giorni a settimana non è un imprenditore con utile al 15%: è un lavoratore con un investimento. Il vero utile si calcola sottraendo il costo del suo lavoro (€35–40k/anno). Solo se positivo l'investimento ha senso.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="lbl fade-in" style="display:block;margin-bottom:16px;">EBITDA per scenario di fatturato</span>
+        <div class="scenario-card fade-in" data-delay="1" style="border-left:3px solid var(--red);">
+          <div class="sc-top">
+            <div><span class="lbl red">Fatturato</span><div class="sc-fat" style="color:var(--red);">€150.000</div></div>
+            <div style="text-align:right;"><span class="lbl red">EBITDA</span><div class="sc-ebitda" style="color:var(--red);">3–5%</div></div>
+          </div>
+          <div class="sc-util"><span class="sc-util-val" style="color:var(--red);">Utile lordo: €4.500–€7.500</span><span class="sc-badge" style="color:var(--red);background:rgba(212,41,28,.12);">RISCHIO</span></div>
+          <div class="sc-note">Il titolare lavora come dipendente senza stipendio. Ogni imprevisto azzera l'utile. Sopravvivenza difficile a medio termine.</div>
+        </div>
+        <div class="scenario-card fade-in" data-delay="2" style="border-left:3px solid #F97316;">
+          <div class="sc-top">
+            <div><span class="lbl" style="color:rgba(249,115,22,.7);">Fatturato</span><div class="sc-fat" style="color:#F97316;">€200.000</div></div>
+            <div style="text-align:right;"><span class="lbl" style="color:rgba(249,115,22,.7);">EBITDA</span><div class="sc-ebitda" style="color:#F97316;">~10%</div></div>
+          </div>
+          <div class="sc-util"><span class="sc-util-val" style="color:#F97316;">Utile lordo: ~€20.000</span><span class="sc-badge" style="color:#F97316;background:rgba(249,115,22,.12);">LIMITE INF.</span></div>
+          <div class="sc-note">Confine della zona di sicurezza. EBITDA normalizzato vicino allo zero. Sostenibile solo senza debiti e con gestione impeccabile.</div>
+        </div>
+        <div class="scenario-card fade-in" data-delay="3" style="border-left:3px solid var(--amber);">
+          <div class="sc-top">
+            <div><span class="lbl amber">Fatturato</span><div class="sc-fat" style="color:var(--amber);">€250.000</div></div>
+            <div style="text-align:right;"><span class="lbl amber">EBITDA</span><div class="sc-ebitda" style="color:var(--amber);">11–13%</div></div>
+          </div>
+          <div class="sc-util"><span class="sc-util-val" style="color:var(--amber);">Utile lordo: ~€27.500</span><span class="sc-badge" style="color:var(--amber);background:rgba(232,146,26,.12);">ZONA OK</span></div>
+          <div class="sc-note">Primo livello di vera profittabilità. L'affiliato inizia a valutare il secondo store. Payback ~30–36 mesi.</div>
+        </div>
+        <div class="scenario-card fade-in" data-delay="4" style="border-left:3px solid var(--sage);">
+          <div class="sc-top">
+            <div><span class="lbl sage">Fatturato</span><div class="sc-fat" style="color:var(--sage);">€300.000</div></div>
+            <div style="text-align:right;"><span class="lbl sage">EBITDA</span><div class="sc-ebitda" style="color:var(--sage);">15–18%</div></div>
+          </div>
+          <div class="sc-util"><span class="sc-util-val" style="color:var(--sage);">Utile lordo: ~€45.000</span><span class="sc-badge" style="color:var(--sage);background:rgba(45,156,110,.12);">ECCELLENTE ★</span></div>
+          <div class="sc-note">Rete che si autofinanzia. Il franchisee diventa multi-unit. Payback in 18–22 mesi. Questo è l'obiettivo da progettare.</div>
+        </div>
+        <div class="strip fade-in" data-delay="5" style="margin-top:4px;">
+          <span class="lbl" style="margin-bottom:14px;display:block;">Stipendio netto mensile realistico</span>
+          <div class="strip-grid strip-grid-3">
+            <div class="strip-item"><span class="lbl" style="color:rgba(212,41,28,.5);">€200k</span><div class="s-val" style="color:var(--red);">~€800/m</div></div>
+            <div class="strip-item"><span class="lbl amber">€250k</span><div class="s-val" style="color:var(--amber);">~€1.500/m</div></div>
+            <div class="strip-item" style="border-right:none;"><span class="lbl sage">€300k</span><div class="s-val" style="color:var(--sage);">~€2.800/m</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S4 GEOMARKETING ══════════════════════════════════════════════════ -->
+<section id="geo" class="raise">
+  <div class="wrap">
+    <div class="sh fade-in"><span class="n">04</span><div class="line"></div><span class="lbl">Geomarketing — La Scienza della Location</span></div>
+    <div class="clip-in">
+      <h2 class="dt dt-lg">LA LOCATION<br>NON SI SCEGLIE.<br><span class="t-amber">SI DIMOSTRA</span><br>CON I NUMERI.</h2>
+    </div>
+    <p class="fade-in" data-delay="1" style="font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;max-width:680px;margin-bottom:48px;">
+      Il food d'impulso vive di <strong style="color:var(--white);">visibilità accidentale</strong>. Il successo di La Piadineria e Alice Pizza non è nella qualità del prodotto: è nell'infallibilità matematica delle scelte ubicazionali. Scontrino medio di riferimento per il settore: <strong style="color:var(--white);">€11</strong>.
+    </p>
+    <div class="grid3 mb24">
+      <!-- TIER 1 -->
+      <div class="tier-card fade-in" data-delay="1" style="border-top:3px solid var(--red);">
+        <div class="tier-head"><div class="tier-num" style="color:var(--red);">TIER 1</div><div class="tier-badge" style="color:var(--red);border-color:rgba(212,41,28,.4);background:rgba(212,41,28,.08);"><span>Entry</span></div></div>
+        <p class="tier-desc">High street di provincia, quartieri residenziali ad alta densità. Bassa distrazione visiva, capture rate elevato. Adatto a launch con gestione diretta del titolare.</p>
+        <div class="tier-grid">
+          <div class="tier-item"><span class="lbl red">Fatturato target</span><div class="tier-item-val" style="color:var(--red);">€150k/anno</div></div>
+          <div class="tier-item"><span class="lbl red">Bacino d'utenza</span><div class="tier-item-val" style="color:var(--red);">15–20k ab.</div></div>
+          <div class="tier-item"><span class="lbl red">Footfall/giorno</span><div class="tier-item-val" style="color:var(--red);">1.400–1.600</div></div>
+          <div class="tier-item"><span class="lbl red">Clienti/giorno</span><div class="tier-item-val" style="color:var(--red);">42–45</div></div>
+          <div class="tier-item"><span class="lbl red">Scontrini/anno</span><div class="tier-item-val" style="color:var(--red);">~13.600</div></div>
+          <div class="tier-item"><span class="lbl red">Canone massimo</span><div class="tier-item-val" style="color:var(--red);">€20k/anno</div></div>
+        </div>
+      </div>
+      <!-- TIER 2 -->
+      <div class="tier-card fade-in" data-delay="2" style="border-top:3px solid var(--amber);">
+        <div class="tier-head"><div class="tier-num" style="color:var(--amber);">TIER 2</div><div class="tier-badge" style="color:var(--amber);border-color:rgba(232,146,26,.4);background:rgba(232,146,26,.08);"><span>Target ★</span></div></div>
+        <p class="tier-desc">Centri storici medi, high street primarie, gallerie commerciali. Il motore del franchising italiano. Benchmark: La Piadineria media ~€220k, Piadineria del Borgo ~€360k.</p>
+        <div class="tier-grid">
+          <div class="tier-item"><span class="lbl amber">Fatturato target</span><div class="tier-item-val" style="color:var(--amber);">€250–300k/a</div></div>
+          <div class="tier-item"><span class="lbl amber">Bacino d'utenza</span><div class="tier-item-val" style="color:var(--amber);">30–50k ab.</div></div>
+          <div class="tier-item"><span class="lbl amber">Footfall/giorno</span><div class="tier-item-val" style="color:var(--amber);">3.000–3.500</div></div>
+          <div class="tier-item"><span class="lbl amber">Clienti/giorno</span><div class="tier-item-val" style="color:var(--amber);">75–80</div></div>
+          <div class="tier-item"><span class="lbl amber">Scontrini/anno</span><div class="tier-item-val" style="color:var(--amber);">~25.000</div></div>
+          <div class="tier-item"><span class="lbl amber">Canone massimo</span><div class="tier-item-val" style="color:var(--amber);">€55k/anno</div></div>
+        </div>
+      </div>
+      <!-- TIER 3 -->
+      <div class="tier-card fade-in" data-delay="3" style="border-top:3px solid var(--sage);">
+        <div class="tier-head"><div class="tier-num" style="color:var(--sage);">TIER 3</div><div class="tier-badge" style="color:var(--sage);border-color:rgba(45,156,110,.4);background:rgba(45,156,110,.08);"><span>Flagship</span></div></div>
+        <p class="tier-desc">Stazioni, aeroporti, centri commerciali metropolitani. Gestione a "dittatura dell'efficienza spaziale". Capital intensive: solo per reti già strutturate.</p>
+        <div class="tier-grid">
+          <div class="tier-item"><span class="lbl sage">Fatturato target</span><div class="tier-item-val" style="color:var(--sage);">€500k+/anno</div></div>
+          <div class="tier-item"><span class="lbl sage">Bacino d'utenza</span><div class="tier-item-val" style="color:var(--sage);">100k+ ab.</div></div>
+          <div class="tier-item"><span class="lbl sage">Footfall/giorno</span><div class="tier-item-val" style="color:var(--sage);">8.500–12.000</div></div>
+          <div class="tier-item"><span class="lbl sage">Clienti/giorno</span><div class="tier-item-val" style="color:var(--sage);">125–130</div></div>
+          <div class="tier-item"><span class="lbl sage">Scontrini/anno</span><div class="tier-item-val" style="color:var(--sage);">45.400+</div></div>
+          <div class="tier-item"><span class="lbl sage">Canone massimo</span><div class="tier-item-val" style="color:var(--sage);">€90k/anno</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="box fade-in" data-delay="4" style="margin-bottom:24px;">
+      <div class="box-header"><span class="lbl">Capture Rate per ecosistema urbano</span></div>
+      <table>
+        <thead><tr><th>Ecosistema urbano</th><th>Capture Rate</th><th>Logica operativa</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td>Centro Commerciale</td><td>4%–7%</td><td>Captive audience già in mood acquisto</td></tr>
+          <tr><td>High Street Provincia</td><td>3%–5%</td><td>Passante lento. Vetrina efficace. Conversione alta.</td></tr>
+          <tr><td>Centro Storico Grande Città</td><td>2%–3,5%</td><td>Turisti + lavoratori. Competizione visiva alta.</td></tr>
+          <tr><td>Stazione / Hub Trasporto</td><td>1%–2,5%</td><td>Volume assoluto compensa la % bassa. Velocità è tutto.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card amber alert fade-in" data-delay="5">
+      <span class="alert-icon">→</span>
+      <div>
+        <div class="alert-title" style="color:var(--amber);">Come validare il footfall prima di firmare</div>
+        <div class="alert-body">Tally counter o app per 3 giorni (lun, gio, sab) nelle fasce: 7–9, 12–14, 17–19. Media/ora × 12 = footfall stimato giornaliero. Se il risultato è sotto il minimo del tier target, la location non va firmata indipendentemente dal canone proposto.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S5 CAPEX ══════════════════════════════════════════════════════════ -->
+<section id="capex">
+  <div class="wrap">
+    <div class="sh fade-in"><span class="n">05</span><div class="line"></div><span class="lbl">Allestimento — Costi di Setup</span></div>
+    <div class="g2">
+      <div>
+        <div class="clip-in"><h2 class="dt dt-lg">OGNI EURO<br>DEL CAPEX<br><span class="t-amber">HA UN NOME</span><br>E UN PERCHÉ.</h2></div>
+        <p class="fade-in" data-delay="1" style="font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:28px;">
+          Un layout esperienziale aumenta l'attrazione clienti del <strong style="color:var(--white);">+25%</strong> e il tasso di conversione del <strong style="color:var(--white);">+40%</strong>. L'investimento nell'allestimento si ripaga non in anni ma in settimane di fatturato incrementale.
+        </p>
+        <div class="box fade-in" data-delay="2" style="margin-bottom:24px;">
+          <div class="box-header"><span class="lbl amber">Tabella costi — 50–60 mq restyling parziale</span></div>
+          <table>
+            <thead><tr><th>Categoria</th><th>Dettaglio</th><th>Stima</th></tr></thead>
+            <tbody>
+              <tr><td>Opere edili / restyling</td><td>Pav., tinteggiatura, branding fisico</td><td>€8k–€18k</td></tr>
+              <tr class="hl"><td>Scaffali metallo nero</td><td>Moduli standard €349/modulo</td><td>€6k–€12k</td></tr>
+              <tr><td>Gondole ed espositori legno</td><td>Gondola €990 · Legno €590/mod</td><td>€4k–€8k</td></tr>
+              <tr><td>Refrigerazione</td><td>Cella frigorifera + tende PVC</td><td>€2k–€4k</td></tr>
+              <tr class="hl"><td>Illuminotecnica</td><td>Diffusa + accento. €80–€500/punto luce</td><td>€2,5k–€5k</td></tr>
+              <tr><td>Sistema POS + IT</td><td>Cloud POS, scanner, stampante, tablet</td><td>€3k–€6k</td></tr>
+              <tr class="hl"><td>Stock iniziale</td><td>~1.000 referenze. Riducibile con conto vendita</td><td>€8k–€20k</td></tr>
+              <tr><td>Insegna + vetrina</td><td>Lettere scatolate o cassonetto luminoso</td><td>€2k–€5k</td></tr>
+              <tr><td>Spese legali apertura</td><td>SCIA, DIA, contratto locazione</td><td>€2k–€3k</td></tr>
+              <tr><td>Riserva liquidità (10–15%)</td><td>Buffer imprevisti primi 3 mesi</td><td>€4k–€7k</td></tr>
+              <tr class="hl"><td>TOTALE STIMATO</td><td>Scenario realistico per American Uncle</td><td>€37k–€80k</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <span class="lbl fade-in" style="display:block;margin-bottom:16px;">Due modelli di intervento a confronto</span>
+        <div class="card amber fade-in" data-delay="1" style="margin-bottom:12px;">
+          <div class="card-title">Restyling Parziale — €500–€1.000/mq</div>
+          <div class="card-body">Locale già commerciale, impianti a norma. Intervento estetico: nuovi pavimenti, tinteggiatura, illuminazione, branding. Il percorso preferito per American Uncle.</div>
+        </div>
+        <div class="card red fade-in" data-delay="2" style="margin-bottom:24px;">
+          <div class="card-title">Nuova Realizzazione — €1.200–€2.200/mq</div>
+          <div class="card-body">Locale al grezzo o ex-non-alimentare. Adeguamento HACCP completo: massetti, pavimenti antibatterici, servizi igienici separati, cablatura totale. Più raro ma necessario per spazi non commerciali.</div>
+        </div>
+        <span class="lbl fade-in" style="display:block;margin-bottom:12px;">Strategie per ridurre il CAPEX</span>
+        <div class="card amber fade-in" data-delay="3" style="margin-bottom:10px;">
+          <div class="card-title">Noleggio Operativo (Operating Lease)</div>
+          <div class="card-body">Contratto 36–60 mesi con fornitori specializzati (ProjectFood, Breda, Grenke). Attrezzature in uso pagando un canone mensile. Trasforma CAPEX in OPEX deducibile. Risparmio: −30–50% sul capitale necessario.</div>
+        </div>
+        <div class="card sage fade-in" data-delay="4" style="margin-bottom:10px;">
+          <div class="card-title">Conto Vendita (Contratto Estimatorio)</div>
+          <div class="card-body">American Uncle consegna lo stock senza pagamento anticipato. L'affiliato paga solo il venduto. Azzera il rischio invenduto, inverte il ciclo finanziario. Risparmio: €8k–€20k sul CAPEX iniziale.</div>
+        </div>
+        <div class="card amber fade-in" data-delay="5">
+          <div class="card-title">Comodato d'Uso</div>
+          <div class="card-body">La Casa Madre fornisce attrezzature brandizzate (frigo, espositori) in uso gratuito in cambio di fornitura esclusiva. Diffuso per refrigeratori nelle bevande.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S6 LEAD GEN ══════════════════════════════════════════════════════ -->
+<section id="leadgen" class="raise">
+  <div class="wrap">
+    <div class="sh fade-in"><span class="n">06</span><div class="line"></div><span class="lbl">Lead Generation — Come Acquisire Affiliati</span></div>
+    <div class="g2">
+      <div>
+        <div class="clip-in"><h2 class="dt dt-lg">TROVARE<br>L'AFFILIATO<br><span class="t-amber">GIUSTO</span><br>HA UN COSTO<br>PRECISO.</h2></div>
+        <p class="fade-in" data-delay="1" style="font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:28px;">
+          Il periodo 2024–2026 è storicamente uno dei più fertili per la lead generation nel franchising. Il target si trova in zona mediana tra reddito autonomo e investimento strutturato — una categoria in forte espansione post-Covid.
+        </p>
+        <div class="box fade-in" data-delay="2" style="margin-bottom:20px;">
+          <div class="box-header"><span class="lbl red">Budget lead generation — Struttura costi HQ</span></div>
+          <table>
+            <thead><tr><th>Voce</th><th>Dettaglio</th><th>Costo annuo</th></tr></thead>
+            <tbody>
+              <tr><td>Retainer agenzia creativa</td><td>Creatività, social, contenuti franchise-specific</td><td>€7.200</td></tr>
+              <tr class="hl"><td>Advertising B2B digitale</td><td>Campagne Meta/Google per lead qualificati</td><td>€6.000–€8.000</td></tr>
+              <tr><td>Portali franchising</td><td>Assofranchising, Infranchising, FranchiseKey</td><td>€2.000–€4.000</td></tr>
+              <tr><td>Fiere di settore</td><td>Salone Franchising Milano + eventi verticali</td><td>€3.000–€5.000</td></tr>
+              <tr class="hl"><td>Totale lead gen stimato</td><td>Pipeline costante e qualificata</td><td>€13.200–€24.200</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="box fade-in" data-delay="3" style="margin-bottom:20px;padding:20px 22px;">
+          <span class="lbl" style="display:block;margin-bottom:14px;">KPI che il prospect analizza prima di firmare</span>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">ROI atteso</span><span class="dr-value" style="color:var(--amber);">22%–28%</span></div></div>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">Payback dichiarato</span><span class="dr-value" style="color:var(--amber);">14–36 mesi</span></div></div>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">Fatturato medio/store</span><span class="dr-value" style="color:var(--amber);">Verificabile dal pilota</span></div></div>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">Time-to-market</span><span class="dr-value" style="color:var(--amber);">Sett. dalla firma</span></div></div>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">EBITDA % dichiarato</span><span class="dr-value" style="color:var(--amber);">Con/senza normalizzazione</span></div></div>
+        </div>
+        <div class="card sage alert fade-in" data-delay="4">
+          <span class="alert-icon">→</span>
+          <div>
+            <div class="alert-title" style="color:var(--sage);">Il disclosure doc è il tuo miglior strumento di vendita</div>
+            <div class="alert-body">Non va scritto in legalese. Va costruito come strumento di marketing: simulazioni finanziarie del pilota, FAQ sulle obiezioni più frequenti, payback period chiari e verificabili. Il tasso di conversione del prospect sale drasticamente con numeri inequivocabili.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="lbl fade-in" style="display:block;margin-bottom:16px;">Psicologia del prospect — fascia €30k–€50k</span>
+        <div class="card amber fade-in" data-delay="1" style="margin-bottom:10px;">
+          <div class="card-title">Il lavoratore in transizione</div>
+          <div class="card-body">Ex dipendente corporate, 35–50 anni, cerca autonomia. Ha TFR o risparmi. Non ha esperienza nel retail ma è disposto a formarsi. Il target più frequente e più fedele alle reti ben supportate.</div>
+        </div>
+        <div class="card amber fade-in" data-delay="2" style="margin-bottom:10px;">
+          <div class="card-title">L'investimento familiare</div>
+          <div class="card-body">Coppia che vuole creare reddito aggiuntivo. Decisione condivisa e ponderata. Processo più lungo ma affiliato più motivato e stabile. Onboarding più accurato necessario.</div>
+        </div>
+        <div class="card red fade-in" data-delay="3" style="margin-bottom:10px;">
+          <div class="card-title">Il serial entrepreneur</div>
+          <div class="card-body">Ha già gestito un'attività. Cerca un format collaudato per abbassare il rischio. Più rapido nella due diligence, più esigente sui numeri. Va gestito con trasparenza totale.</div>
+        </div>
+        <div class="card red fade-in" data-delay="4">
+          <div class="card-title">Il piccolo investitore passivo</div>
+          <div class="card-body">Ha liquidità, non gestirà il negozio in prima persona. Profilo ad alto rischio se il format richiede presidio attivo del titolare. Valutare con attenzione prima di qualificare il lead.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S7 LEGALE ══════════════════════════════════════════════════════════ -->
+<section id="legale">
+  <div class="wrap">
+    <div class="sh fade-in"><span class="n">07</span><div class="line"></div><span class="lbl">Quadro Legale — Legge 129/2004</span></div>
+    <div class="g2">
+      <div>
+        <div class="clip-in"><h2 class="dt dt-lg">LA LEGGE<br>NON ASPETTA.<br><span class="t-red">CONOSCERLA</span><br>È<br>OBBLIGATORIO.</h2></div>
+        <p class="fade-in" data-delay="1" style="font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:28px;">
+          Il franchising in Italia è regolato dalla <strong style="color:var(--white);">Legge 6 maggio 2004 n. 129</strong>. Prima di questa norma favoriva abusi sistematici. Oggi la legge tutela strutturalmente l'affiliato come parte debole — il franchisor porta sempre l'onere della prova.
+        </p>
+        <div class="legal-item fade-in" data-delay="1">
+          <div class="legal-n"><span>01</span></div>
+          <div><div class="legal-title">Regola dei 30 giorni — Art. 4 c.1 — INDEROGABILE</div><div class="legal-body">Il franchisor DEVE consegnare copia integrale del contratto + documenti obbligatori almeno 30 giorni prima della firma. Il termine è inderogabile anche con consenso dell'affiliato. Violarlo apre azioni di annullamento e risarcimento.</div></div>
+        </div>
+        <div class="legal-item fade-in" data-delay="2">
+          <div class="legal-n"><span>02</span></div>
+          <div><div class="legal-title">Forma scritta ad substantiam</div><div class="legal-body">Il contratto deve essere obbligatoriamente in forma scritta a pena di nullità assoluta. Non esistono contratti verbali validi nel franchising. La forma scritta è requisito di esistenza giuridica — Art. 3, L. 129/2004.</div></div>
+        </div>
+        <div class="legal-item fade-in" data-delay="3">
+          <div class="legal-n"><span>03</span></div>
+          <div><div class="legal-title">Durata minima 3 anni (pratica: 6 anni)</div><div class="legal-body">La legge fissa 3 anni come durata minima inderogabile. In pratica le locazioni commerciali durano 6 anni: il contratto di franchising va allineato per non lasciare l'affiliato con negozio attivo senza marchio.</div></div>
+        </div>
+        <div class="legal-item fade-in" data-delay="4">
+          <div class="legal-n"><span>04</span></div>
+          <div><div class="legal-title">Documenti obbligatori da allegare</div><div class="legal-body">Obbligatori: (1) ultimi 3 bilanci su richiesta, (2) dati sul marchio, (3) elenco affiliati operativi, (4) variazioni rete ultimi 3 anni, (5) storico contenziosi. Le omissioni configurano nullità radicale.</div></div>
+        </div>
+        <div class="legal-item risk fade-in" data-delay="5">
+          <div class="legal-n"><span>05</span></div>
+          <div><div class="legal-title">Trasmissione con data certa — PEC o Raccomandata A/R</div><div class="legal-body">Mai via email normale. PEC o raccomandata A/R sono gli unici metodi che generano "data certa" inoppugnabile in giudizio. L'onere della prova è sempre del franchisor: conservare tutto per sempre.</div></div>
+        </div>
+        <div class="legal-item fade-in" data-delay="6">
+          <div class="legal-n"><span>06</span></div>
+          <div><div class="legal-title">Esclusiva territoriale — clausola fondamentale</div><div class="legal-body">Necessaria per prevenire la cannibalizzazione. Senza esclusiva il franchisor potrebbe aprire un secondo store a 200 metri. Deve specificare: perimetro geografico, eccezioni e-commerce, durata.</div></div>
+        </div>
+        <div class="legal-item risk fade-in" data-delay="7">
+          <div class="legal-n"><span>07</span></div>
+          <div><div class="legal-title">Rischio abuso Royalty-Free — Art. 9 L. 192/1998</div><div class="legal-body">Se il franchisor rinuncia alle royalty per mascherare i profitti con markup occulti sui prodotti forniti in esclusiva, configura "abuso di dipendenza economica". Conseguenze: nullità clausole, risarcimento danni, sanzioni AGCM.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="box fade-in" data-delay="1" style="padding:24px;margin-bottom:20px;">
+          <span class="lbl" style="display:block;margin-bottom:20px;">Procedura operativa — Le 4 fasi obbligatorie</span>
+          <div class="proc-item">
+            <div class="proc-n">01</div>
+            <div><div class="proc-title">Compilare il Documento Informativo</div><div class="proc-body">Aggiornato annualmente. Bilanci, dati contenzioso, lista affiliati. Un fascicolo strutturato, non un PDF improvvisato dell'ultimo minuto.</div></div>
+          </div>
+          <div class="proc-item">
+            <div class="proc-n">02</div>
+            <div><div class="proc-title">Fare firmare NDA preventiva</div><div class="proc-body">Prima di condividere manuale operativo e know-how: Accordo di Riservatezza. Protegge il brand e i dati finanziari del pilota.</div></div>
+          </div>
+          <div class="proc-item">
+            <div class="proc-n">03</div>
+            <div><div class="proc-title">Trasmettere via PEC o Raccomandata A/R</div><div class="proc-body">Mai email normale. PEC + ricevuta di consegna = data certa inoppugnabile. Conservare tutta la documentazione per sempre.</div></div>
+          </div>
+          <div class="proc-item">
+            <div class="proc-n">04</div>
+            <div><div class="proc-title">Blocco procedurale 30 giorni esatti</div><div class="proc-body">Dal momento della ricezione certificata. Nessuna firma prima di 30 giorni naturali consecutivi. Inserire blocco fisico nel CRM aziendale.</div></div>
+          </div>
+        </div>
+        <div class="card red fade-in" data-delay="2" style="margin-bottom:20px;">
+          <span class="lbl red" style="display:block;margin-bottom:14px;">Tempistiche prescrizione — Se qualcosa va male</span>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">Azione di annullamento (vizio consenso)</span><span class="dr-value" style="color:var(--red);">5 anni</span></div></div>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">Azione di risoluzione (inadempimento)</span><span class="dr-value" style="color:var(--red);">10 anni</span></div></div>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">Mediazione civile obbligatoria</span><span class="dr-value" style="color:var(--red);">Step obbligatorio</span></div></div>
+          <div class="dr"><div class="dr-inner"><span class="dr-label">Onere della prova</span><span class="dr-value" style="color:var(--red);">→ FRANCHISOR</span></div></div>
+        </div>
+        <div class="card red alert fade-in" data-delay="3">
+          <span class="alert-icon">!</span>
+          <div>
+            <div class="alert-title" style="color:var(--red);">Il modello Royalty-Free + markup nascosto è illegale</div>
+            <div class="alert-body">Se la Casa Madre adottasse zero royalty + profitto nascosto nel markup dei prodotti forniti in esclusiva obbligatoria, configura abuso di dipendenza economica ai sensi della L. 192/1998. Le royalty trasparenti sono una protezione legale per il franchisor, non solo best practice.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S8 AMERICAN UNCLE ══════════════════════════════════════════════════ -->
+<section id="au" class="au-cta">
+  <div class="wrap">
+    <div class="sh fade-in"><span class="n">08</span><div class="line"></div><span class="lbl">American Uncle — Il Prossimo Capitolo</span></div>
+    <div class="clip-in">
+      <h2 class="dt dt-xl">ORA CHE<br>CONOSCI<br><span class="t-red">LE REGOLE</span><br>DEL GIOCO,<br>GIOCHIAMO.</h2>
+    </div>
+    <div class="g2 fade-in" data-delay="2">
+      <p style="font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;">
+        Il contesto è definito. I benchmark sono chiari. La legge è compresa. Adesso si apre il capitolo American Uncle: il pilota Caserta, il nodo critico del margine, le 3 ipotesi strategiche (A · B · C) e la delibera da prendere.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 18px;background:var(--raise);border:1px solid var(--rule);border-radius:3px;"><span style="font-size:13px;color:var(--muted);">Pilota Caserta — P&L reale 2025</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);">STEP 2 →</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 18px;background:var(--raise);border:1px solid var(--rule);border-radius:3px;"><span style="font-size:13px;color:var(--muted);">Il nodo del margine franchisee</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);">STEP 2 →</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 18px;background:var(--raise);border:1px solid var(--rule);border-radius:3px;"><span style="font-size:13px;color:var(--muted);">Le 3 ipotesi: A · B · C</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);">STEP 2 →</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 18px;background:var(--raise);border:1px solid var(--rule);border-radius:3px;"><span style="font-size:13px;color:var(--muted);">Struttura costi HQ e break-even</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);">STEP 2 →</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 18px;background:var(--raise);border:1px solid var(--rule);border-radius:3px;"><span style="font-size:13px;color:var(--muted);">Roadmap operativa con milestone</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);">STEP 2 →</span></div>
+      </div>
+    </div>
+    <div class="footer-bar fade-in" data-delay="3">
+      <img src="https://americanuncle.it/cdn/shop/files/logo-american-uncle-nuovo.png" alt="American Uncle"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <span class="footer-logo-text" style="display:none;">AMERICAN UNCLE</span>
+      <span class="footer-date">Knowledge Base · Aprile 2026 · Uso Interno Riservato</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ JS ═════════════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  /* ── IntersectionObserver per fade-in e clip-in ── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.fade-in, .clip-in').forEach(el => io.observe(el));
+
+  /* ── Bar fill ── */
+  const barIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        barIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.bar-fill').forEach(el => barIO.observe(el));
+
+  /* ── Active nav via scroll ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navBtns  = document.querySelectorAll('.nav-btn');
+
+  const navIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.section === e.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+  sections.forEach(s => navIO.observe(s));
+
+  /* ── Smooth scroll on nav click ── */
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.getElementById(btn.dataset.section);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  /* ── Trigger hero animations immediately ── */
+  setTimeout(() => {
+    document.querySelectorAll('.wrap-hero .fade-in, .wrap-hero .clip-in').forEach(el => {
+      el.classList.add('visible');
+    });
+  }, 120);
+
+})();
+
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     TRANSIZIONE STEP 1 → STEP 2
+     ════════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ── AU BLUE THEME (Step 2) ─────────────────────────────────────────── */
+:root {
+  --au-blue:    #2E53A1;
+  --au-blue-dk: #1E3870;
+  --au-blue-lt: #4A6FBF;
+  --au-red:     #CD201A;
+  --au-ink:     #0F1B35;
+  --au-white:   #FFFFFF;
+  --au-off:     #F4F6FB;
+  --au-text:    #121212;
+  --au-muted:   rgba(18,18,18,0.42);
+  --au-rule:    rgba(18,18,18,0.08);
+  --au-dim:     rgba(46,83,161,0.12);
+  --au-card:    #EEF2FA;
+}
+
+.au-wrap { max-width: 1160px; margin: 0 auto; padding: 96px 56px; }
+.au-wrap-full { max-width: 1160px; margin: 0 auto; padding: 80px 56px; }
+@media (max-width: 900px) { .au-wrap, .au-wrap-full { padding: 64px 24px; } }
+
+/* Section backgrounds */
+.au-section          { background: var(--au-white); border-top: 1px solid var(--au-rule); }
+.au-section.au-raise { background: var(--au-off); }
+.au-section.au-blue  { background: var(--au-blue); }
+.au-section.au-ink   { background: var(--au-ink); }
+
+/* AU typography */
+.au-sh { display:flex; align-items:center; gap:16px; margin-bottom:48px; }
+.au-sh .n    { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--au-blue); font-weight:700; letter-spacing:.06em; }
+.au-sh .line { width:40px; height:1.5px; background:var(--au-blue); flex-shrink:0; }
+.au-sh .lbl  { font-family:'DM Sans',sans-serif; font-size:10px; color:var(--au-muted); letter-spacing:.2em; text-transform:uppercase; font-weight:600; }
+.au-sh.inv .n    { color:#fff; }
+.au-sh.inv .line { background:#fff; }
+.au-sh.inv .lbl  { color:rgba(255,255,255,0.45); }
+
+.au-dt { font-family:'Bebas Neue',cursive; letter-spacing:.02em; line-height:.88; margin-bottom:40px; color:var(--au-text); }
+.au-dt .blue   { color:var(--au-blue); }
+.au-dt .red    { color:var(--au-red); }
+.au-dt .white  { color:#fff; }
+.au-dt .stroke { -webkit-text-stroke:1.5px var(--au-blue); color:transparent; }
+.au-dt-lg { font-size: clamp(52px,6.5vw,88px); }
+.au-dt-xl { font-size: clamp(64px,9vw,120px); }
+.au-dt-inv { color:#fff; }
+
+.au-lbl { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; margin-bottom:6px; display:block; color:var(--au-muted); }
+.au-lbl.blue { color:rgba(46,83,161,0.65); }
+.au-lbl.red  { color:rgba(205,32,26,0.65); }
+.au-lbl.inv  { color:rgba(255,255,255,0.4); }
+
+/* AU Stat */
+.au-stat { padding:28px 0; border-bottom:1px solid var(--au-rule); }
+.au-stat .val { font-family:'Bebas Neue',cursive; font-size:clamp(42px,5vw,68px); line-height:.9; margin-bottom:8px; color:var(--au-blue); }
+.au-stat .val.red   { color:var(--au-red); }
+.au-stat .val.ink   { color:var(--au-text); }
+.au-stat .val.sage  { color:#2D9C6E; }
+.au-stat .lbl-v { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:var(--au-text); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+.au-stat .note  { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--au-muted); line-height:1.6; max-width:340px; margin-top:4px; }
+
+/* AU Data row */
+.au-dr { padding:11px 0; border-bottom:1px solid var(--au-rule); }
+.au-dr .inner { display:flex; justify-content:space-between; align-items:center; margin-bottom:0; }
+.au-dr.has-bar .inner { margin-bottom:7px; }
+.au-dr .al { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--au-muted); }
+.au-dr .al.bold { color:var(--au-text); font-weight:600; }
+.au-dr .av { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:var(--au-blue); }
+.au-dr .av.red { color:var(--au-red); }
+.au-dr .av.ink { color:var(--au-text); }
+.au-dr .bar-bg { height:2px; background:var(--au-rule); border-radius:1px; overflow:hidden; }
+.au-dr .bar    { height:100%; border-radius:1px; }
+
+/* AU Card */
+.au-card { background:var(--au-card); border-left:3px solid var(--au-blue); border-radius:0 4px 4px 0; padding:22px 24px; }
+.au-card.red  { border-left-color:var(--au-red); }
+.au-card .ct  { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:var(--au-blue); margin-bottom:6px; }
+.au-card.red .ct { color:var(--au-red); }
+.au-card .cb  { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--au-muted); line-height:1.7; }
+
+/* AU Alert */
+.au-alert { display:flex; gap:18px; align-items:flex-start; margin-top:24px; }
+.au-alert .icon  { font-size:18px; flex-shrink:0; }
+.au-alert .title { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:7px; }
+.au-alert .body  { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--au-muted); line-height:1.75; }
+
+/* AU Box */
+.au-box { background:var(--au-white); border:1px solid var(--au-rule); border-radius:4px; overflow:hidden; }
+.au-box.off { background:var(--au-off); }
+.au-box .bh { padding:12px 20px; border-bottom:1px solid var(--au-rule); }
+
+/* AU Table */
+.au-box table { width:100%; border-collapse:collapse; }
+.au-box th { font-family:'DM Sans',sans-serif; font-size:10px; color:var(--au-muted); font-weight:700; letter-spacing:.16em; text-transform:uppercase; padding:8px 14px 12px; text-align:left; border-bottom:1px solid rgba(46,83,161,0.15); }
+.au-box th:not(:first-child) { text-align:right; }
+.au-box td { font-family:'DM Sans',sans-serif; font-size:13px; color:var(--au-muted); padding:12px 14px; border-bottom:1px solid var(--au-rule); text-align:left; }
+.au-box td:not(:first-child) { text-align:right; font-family:'JetBrains Mono',monospace; color:var(--au-blue); }
+.au-box tr.hl { background:rgba(46,83,161,0.06); }
+.au-box tr.hl td { font-weight:700; }
+.au-box tr.hl td:first-child { color:var(--au-text); }
+.au-box tr.hl td:not(:first-child) { color:var(--au-blue); }
+.au-box tr.red-hl { background:rgba(205,32,26,0.05); }
+.au-box tr.red-hl td:not(:first-child) { color:var(--au-red); font-weight:700; }
+
+/* AU Hypothesis Card */
+.hypo-card { border:1px solid; border-radius:4px; padding:28px 24px; height:100%; transition:transform .2s; }
+.hypo-card:hover { transform:translateY(-2px); }
+.hypo-card .hc-badge { display:inline-block; font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:4px 10px; border-radius:2px; margin-bottom:16px; }
+.hypo-card .hc-id   { font-family:'Bebas Neue',cursive; font-size:52px; line-height:.9; margin-bottom:6px; }
+.hypo-card .hc-sub  { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--au-muted); margin-bottom:20px; }
+.hypo-card .hc-row  { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid; }
+.hypo-card .hc-lbl  { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--au-muted); }
+.hypo-card .hc-val  { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
+.hypo-card .hc-note { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--au-muted); line-height:1.7; margin-top:16px; padding-top:14px; border-top:1px solid; }
+
+/* AU Strip */
+.au-strip { border:1px solid var(--au-rule); border-radius:4px; padding:22px 24px; background:var(--au-white); }
+.au-strip.off { background:var(--au-off); }
+.au-strip .sg { display:grid; gap:0; }
+.au-strip .sg4 { grid-template-columns:repeat(4,1fr); }
+.au-strip .sg3 { grid-template-columns:repeat(3,1fr); }
+.au-strip .si  { padding-right:20px; border-right:1px solid var(--au-rule); }
+.au-strip .si:last-child { border-right:none; }
+.au-strip .sv  { font-family:'Bebas Neue',cursive; font-size:32px; line-height:1; margin-bottom:6px; color:var(--au-blue); }
+.au-strip .sv.red { color:var(--au-red); }
+.au-strip .sl  { font-family:'DM Sans',sans-serif; font-size:10px; color:var(--au-muted); line-height:1.5; }
+
+/* Roadmap */
+.roadmap { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+.roadmap::before { content:''; position:absolute; top:20px; left:12.5%; right:12.5%; height:1.5px; background:linear-gradient(90deg,var(--au-red),var(--au-blue),rgba(46,83,161,.1)); }
+.rm-item { padding-right:28px; position:relative; z-index:1; }
+.rm-dot  { width:40px; height:40px; border-radius:50%; border:2px solid; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; }
+.rm-phase { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; margin-bottom:4px; }
+.rm-title { font-family:'Bebas Neue',cursive; font-size:26px; margin-bottom:4px; color:var(--au-text); }
+.rm-time  { font-family:'DM Sans',sans-serif; font-size:11px; color:rgba(255,255,255,.55); margin-bottom:14px; }
+.rm-items { list-style:none; }
+.rm-items li { display:flex; gap:8px; font-family:'DM Sans',sans-serif; font-size:12px; color:rgba(255,255,255,.65); line-height:1.6; margin-bottom:5px; }
+.rm-items li::before { content:'·'; flex-shrink:0; }
+@media(max-width:900px){ .roadmap{grid-template-columns:1fr;} .roadmap::before{display:none;} }
+
+/* Margin bar visual */
+.margin-bar { display:flex; gap:3px; height:52px; border-radius:4px; overflow:hidden; }
+.mb-seg { display:flex; align-items:center; justify-content:center; padding:0 8px; }
+.mb-seg span { font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700; text-align:center; line-height:1.3; }
+
+/* AU legal */
+.au-legal { display:flex; gap:18px; padding:20px 0; border-bottom:1px solid var(--au-rule); }
+.au-legal .ln { width:28px; height:28px; border-radius:3px; border:1px solid rgba(46,83,161,.3); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.au-legal .ln span { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--au-blue); font-weight:700; }
+.au-legal .lt { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:var(--au-blue); margin-bottom:5px; }
+.au-legal .lb { font-family:'DM Sans',sans-serif; font-size:12px; color:var(--au-muted); line-height:1.7; }
+
+/* AU Nav items (appended to nav) */
+.nav-sep { width:1px; height:32px; background:rgba(245,240,232,.1); align-self:center; flex-shrink:0; margin:0 4px; }
+.nav-btn-au { display:flex; align-items:center; padding:0 14px; background:none; border:none; cursor:pointer; border-bottom:2px solid transparent; border-top:2px solid transparent; white-space:nowrap; transition:all .2s; text-decoration:none; }
+.nav-btn-au span { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:500; color:rgba(46,83,161,.6); letter-spacing:.06em; transition:color .2s; }
+.nav-btn-au.au-active { border-bottom-color:var(--au-blue); }
+.nav-btn-au.au-active span { color:var(--au-blue); font-weight:700; }
+
+/* Fade for light sections */
+.fade-light { opacity:0; transform:translateY(20px); transition:opacity .65s ease, transform .65s cubic-bezier(.16,1,.3,1); }
+.fade-light.visible { opacity:1; transform:none; }
+.fade-light[data-delay="1"] { transition-delay:.08s; }
+.fade-light[data-delay="2"] { transition-delay:.16s; }
+.fade-light[data-delay="3"] { transition-delay:.24s; }
+.fade-light[data-delay="4"] { transition-delay:.32s; }
+.clip-light { clip-path:inset(100% 0 0 0); transition:clip-path .85s cubic-bezier(.16,1,.3,1); }
+.clip-light.visible { clip-path:inset(0 0 0 0); }
+.bar-fill-blue { width:0 !important; transition:width 1s cubic-bezier(.16,1,.3,1) .2s; }
+.bar-fill-blue.visible { width:var(--bar-w) !important; }
+</style>
+
+<!-- ── NAV INJECTION (AU items) ─────────────────────────────────────── -->
+<script>
+(function addAUNav() {
+  const navItems = document.querySelector('.nav-items');
+  if (!navItems) return;
+  const sep = document.createElement('div'); sep.className = 'nav-sep'; navItems.appendChild(sep);
+  const auLinks = [
+    { id:'au-chi',  label:'AU — Chi Siamo' },
+    { id:'au-pilota', label:'Pilota'       },
+    { id:'au-nodo',   label:'Il Nodo'      },
+    { id:'au-ipotesi',label:'3 Ipotesi'    },
+    { id:'au-hq',     label:'HQ & BEP'     },
+    { id:'au-roadmap',label:'Roadmap'      },
+  ];
+  auLinks.forEach(l => {
+    const a = document.createElement('a');
+    a.href = '#' + l.id; a.className = 'nav-btn-au'; a.dataset.section = l.id;
+    a.innerHTML = '<span>' + l.label + '</span>';
+    navItems.appendChild(a);
+  });
+})();
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     SEPARATORE STEP 1 → STEP 2
+     ════════════════════════════════════════════════════════════════════ -->
+<div style="background:var(--au-blue);padding:80px 56px;position:relative;overflow:hidden;">
+  <!-- Stars decoration -->
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0.03) 0,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 80px);pointer-events:none;"></div>
+  <div style="max-width:1160px;margin:0 auto;position:relative;z-index:1;">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
+      <div style="width:24px;height:1.5px;background:rgba(255,255,255,0.5);"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);font-weight:700;letter-spacing:.2em;text-transform:uppercase;">STEP 02 — American Uncle</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;">
+      <h2 style="font-family:'Bebas Neue',cursive;font-size:clamp(56px,8vw,100px);line-height:.86;color:#fff;">
+        ORA<br>PARLIAMO<br><span style="-webkit-text-stroke:1.5px rgba(255,255,255,0.5);color:transparent;">DI NOI.</span>
+      </h2>
+      <div>
+        <p style="font-family:'DM Sans',sans-serif;font-size:15px;color:rgba(255,255,255,0.6);line-height:1.85;font-weight:300;margin-bottom:24px;">
+          Il contesto è definito. I benchmark sono chiari. Adesso entriamo nel merito di American Uncle: il pilota Caserta, il nodo critico del margine, le 3 ipotesi strategiche e la delibera da prendere.
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <a href="#au-chi"    style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:3px;text-decoration:none;transition:background .2s;"><span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.7);">Chi Siamo</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);">→</span></a>
+          <a href="#au-pilota" style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:3px;text-decoration:none;"><span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.7);">Pilota Caserta</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);">→</span></a>
+          <a href="#au-nodo"   style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:3px;text-decoration:none;"><span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.7);">Il Nodo</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);">→</span></a>
+          <a href="#au-ipotesi"style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:3px;text-decoration:none;"><span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.7);">3 Ipotesi A·B·C</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);">→</span></a>
+          <a href="#au-hq"     style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:3px;text-decoration:none;"><span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.7);">HQ & Break-even</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);">→</span></a>
+          <a href="#au-roadmap"style="display:flex;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:3px;text-decoration:none;"><span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.7);">Roadmap</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.3);">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AU.01 — CHI SIAMO ════════════════════════════════════════════════ -->
+<section id="au-chi" class="au-section">
+  <div class="au-wrap">
+    <div class="au-sh fi"><span class="n">AU·01</span><div class="line"></div><span class="lbl">Chi Siamo — Il Brand</span></div>
+    <div class="g2">
+      <div>
+        <div class="ci">
+          <h2 class="au-dt au-dt-lg">E‑COMMERCE<br>LEADER.<br><span class="blue" style="color:var(--au-blue);">ORA</span><br>RETAIL.</h2>
+        </div>
+        <p class="fi" data-delay="1" style="font-size:15px;color:var(--au-muted);line-height:1.85;font-weight:300;margin-bottom:20px;">
+          American Uncle è il punto di riferimento online in Italia per snack, bevande e specialty food internazionali. Catalogo attivo di oltre <strong style="color:var(--au-text);">3.000 referenze</strong>, supply chain diretta con USA, Giappone, UK, Korea e 40+ paesi.
+        </p>
+        <p class="fi" data-delay="2" style="font-size:15px;color:var(--au-muted);line-height:1.85;font-weight:300;margin-bottom:32px;">
+          Il brand cavalca il <strong style="color:var(--au-text);">TikTok snack effect</strong>: la domanda di punti vendita fisici dove toccare i prodotti visti online è strutturale. I clienti e-commerce cercano già attivamente il negozio fisico — il conversion rate di partenza è strutturalmente più alto rispetto a qualsiasi brand sconosciuto.
+        </p>
+        <div class="au-card fi" data-delay="3">
+          <div class="ct">Il vantaggio competitivo strutturale</div>
+          <div class="cb">American Uncle acquista i prodotti al 40% del prezzo retail finale. Questo significa 60 punti di margine lordo disponibili — contro il 28–38% della media del franchising food tradizionale con cucina. Questa differenza non è tattica: è l'architettura stessa del business.</div>
+        </div>
+      </div>
+      <div class="fi" data-delay="1">
+        <div class="au-stat" style="border-top:1px solid var(--au-rule);">
+          <span class="au-lbl blue">Referenze attive a catalogo</span>
+          <div class="val">3.000+</div>
+          <div class="note">Snack, bevande, candy e specialty food da 40+ paesi. Catalogo in crescita costante.</div>
+        </div>
+        <div class="au-stat">
+          <span class="au-lbl blue">Margine lordo su acquisto</span>
+          <div class="val">60%</div>
+          <div class="note">Comprato al 40% del prezzo retail. Vantaggio strutturale vs tutta la GDO e distribuzione tradizionale.</div>
+        </div>
+        <div class="au-stat">
+          <span class="au-lbl red">Fatturato pilota Caserta 2025</span>
+          <div class="val red">€149.632</div>
+          <div class="note">Dato reale, non proiettato. Primo store fisico del brand. Primo anno a regime completo.</div>
+        </div>
+        <div class="au-stat">
+          <span class="au-lbl blue">CAPEX stimato di ingresso</span>
+          <div class="val" style="color:var(--au-text);font-size:clamp(36px,4vw,52px);">€30k–€50k</div>
+          <div class="note">vs €90k–€220k del franchising food tradizionale con cucina e canna fumaria.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AU.02 — IL PILOTA CASERTA ════════════════════════════════════════ -->
+<section id="au-pilota" class="au-section au-raise">
+  <div class="au-wrap">
+    <div class="au-sh fi"><span class="n">AU·02</span><div class="line"></div><span class="lbl">Il Pilota — Caserta 2025</span></div>
+    <div class="g2">
+      <div>
+        <div class="ci">
+          <h2 class="au-dt au-dt-lg">I NUMERI<br>REALI.<br><span class="red" style="color:var(--au-red);">NESSUNA</span><br>PROIEZIONE.</h2>
+        </div>
+        <p class="fi" data-delay="1" style="font-size:14px;color:var(--au-muted);line-height:1.85;font-weight:300;margin-bottom:28px;">
+          Il negozio di Caserta è il nostro laboratorio vivente. I dati 2025 ci dicono esattamente dove siamo, cosa funziona e — soprattutto — dove si trova il nodo da risolvere prima di aprire il franchising.
+        </p>
+        <div class="au-box fi" data-delay="2" style="margin-bottom:20px;">
+          <div class="bh"><span class="au-lbl blue">P&L Negozio Caserta — Anno 2025</span></div>
+          <div style="padding:0 4px;">
+            <div class="au-dr has-bar"><div class="inner"><span class="al bold">Ricavi lordi</span><span class="av ink">€149.632</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:100%;background:rgba(18,18,18,0.2);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al">COGS — Costo prodotti</span><span class="av red">−€62.336</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:42%;background:var(--au-red);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al bold">First Margin (58,3%)</span><span class="av" style="color:var(--au-blue);font-weight:700;">€87.296</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:58%;background:var(--au-blue);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al">Imballi & Pack</span><span class="av red">−€6.671</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:4.5%;background:var(--au-red);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al">Trasporto acquisti</span><span class="av red">−€2.754</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:2%;background:var(--au-red);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al">Trasporto vendite + altri</span><span class="av red">−€2.623</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:1.8%;background:var(--au-red);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al">Marketing + Commissioni</span><span class="av red">−€1.669</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:1.1%;background:var(--au-red);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al bold">Second Margin (49,2%)</span><span class="av ink">€73.579</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:49%;background:rgba(18,18,18,0.15);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al">OPEX dirette</span><span class="av red">−€21.541</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:14%;background:var(--au-red);"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al">Personale diretto</span><span class="av red">−€56.359</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:37.7%;background:var(--au-red);"></div></div></div>
+            <div class="au-dr has-bar" style="background:rgba(46,83,161,0.04);"><div class="inner"><span class="al bold">EBITDA solo costi diretti ✓</span><span class="av" style="color:#2D9C6E;font-weight:700;">+€5.242 (3,5%)</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:3.5%;background:#2D9C6E;"></div></div></div>
+            <div class="au-dr has-bar"><div class="inner"><span class="al">OPEX + Personale indiretto HQ</span><span class="av red">−€38.441</span></div><div class="bar-bg"><div class="bar bf" style="--bar-w:25.7%;background:var(--au-red);"></div></div></div>
+            <div class="au-dr" style="background:rgba(205,32,26,0.04);"><div class="inner"><span class="al bold">EBITDA con costi indiretti HQ</span><span class="av red" style="font-weight:700;">−€42.762 (−28,6%)</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:22px;color:rgba(18,18,18,0.2);line-height:1.5;margin-bottom:40px;padding-bottom:36px;border-bottom:1px solid var(--au-rule);">
+          "Il format è valido. Il 58% di first margin lo dimostra. Il problema è esclusivamente il modello di margine del franchisee."
+        </div>
+        <div class="au-legal fi" data-delay="1">
+          <div class="ln"><span style="color:#2D9C6E;">✓</span></div>
+          <div><div class="lt" style="color:#2D9C6E;">Format validato</div><div class="lb">58,3% di margine lordo confermato su vendite reali. I clienti comprano, tornano, consigliano. Il prodotto ha un mercato fisico solido.</div></div>
+        </div>
+        <div class="au-legal fi" data-delay="2">
+          <div class="ln"><span style="color:#2D9C6E;">✓</span></div>
+          <div><div class="lt" style="color:#2D9C6E;">Brand awareness preesistente</div><div class="lb">I clienti e-commerce cercano attivamente il negozio fisico. Conversion rate strutturalmente alto vs brand sconosciuto.</div></div>
+        </div>
+        <div class="au-legal fi" data-delay="3">
+          <div class="ln" style="border-color:rgba(249,115,22,.3);"><span style="color:#F97316;">△</span></div>
+          <div><div class="lt" style="color:#F97316;">Personale pesa il 37,7%</div><div class="lb">€56.359 di personale diretto su €149k di fatturato. Con €250k il peso scende al 22–25%. Il volume è la leva.</div></div>
+        </div>
+        <div class="au-legal fi" data-delay="4">
+          <div class="ln" style="border-color:rgba(249,115,22,.3);"><span style="color:#F97316;">△</span></div>
+          <div><div class="lt" style="color:#F97316;">Imballi e logistica da ottimizzare</div><div class="lb">€6.671 di imballi (4,5%) indicano spazio di ottimizzazione con un contratto di fornitura centralizzato AU.</div></div>
+        </div>
+        <div class="au-legal fi" data-delay="5" style="border-color:rgba(205,32,26,.15);">
+          <div class="ln" style="border-color:rgba(205,32,26,.3);"><span style="color:var(--au-red);">✕</span></div>
+          <div><div class="lt">IL NODO: margine franchisee al 30%</div><div class="lb">Con margine al 30%, gross profit = €44k su €149k. Con OPEX €95k → EBITDA −€51k. Matematicamente insostenibile. Richiede una delibera.</div></div>
+        </div>
+        <div class="au-legal fi" data-delay="6">
+          <div class="ln"><span>→</span></div>
+          <div><div class="lt">Target: €250k–€300k di fatturato</div><div class="lb">Solo sopra €250k il franchisee raggiunge EBITDA sano (12–18%). La selezione location deve garantire questo potenziale.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AU.03 — IL NODO CRITICO ══════════════════════════════════════════ -->
+<section id="au-nodo" class="au-section au-blue" style="background:var(--au-blue);">
+  <div class="au-wrap">
+    <div class="au-sh inv fi"><span class="n">AU·03</span><div class="line"></div><span class="lbl">Il Nodo Critico — La Delibera</span></div>
+    <div class="ci">
+      <h2 class="au-dt au-dt-lg au-dt-inv">IL MARGINE<br>CHE DAI<br><span style="-webkit-text-stroke:1.5px rgba(255,255,255,0.5);color:transparent;">DECIDE</span><br><span style="-webkit-text-stroke:1.5px rgba(255,255,255,0.5);color:transparent;">TUTTO.</span></h2>
+    </div>
+    <div class="g2">
+      <div>
+        <p class="fi" data-delay="1" style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.85;font-weight:300;margin-bottom:36px;">
+          American Uncle acquista al <strong style="color:#fff;">40%</strong> del prezzo retail finale. Restano <strong style="color:#fff;">60 punti di margine</strong> da distribuire tra Casa Madre e Franchisee. Questa ripartizione determina la vita o la morte dell'intera rete.
+        </p>
+
+        <!-- Margin bar — scenario A (target) -->
+        <div class="fi" data-delay="2" style="margin-bottom:28px;">
+          <div style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;">SCENARIO TARGET — Margine franchisee 50%</div>
+          <div class="margin-bar">
+            <div class="mb-seg" style="flex:40;background:rgba(255,255,255,0.12);"><span style="color:rgba(255,255,255,0.5);">Costo AU<br>40%</span></div>
+            <div class="mb-seg" style="flex:10;background:rgba(255,255,255,0.7);"><span style="color:var(--au-blue);font-size:9px;">HQ<br>10%</span></div>
+            <div class="mb-seg" style="flex:50;background:#fff;"><span style="color:var(--au-blue);">Franchisee 50% ★</span></div>
+          </div>
+        </div>
+
+        <!-- Margin bar — scenario iniziale (insostenibile) -->
+        <div class="fi" data-delay="3" style="margin-bottom:36px;">
+          <div style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;">SCENARIO INIZIALE — Margine franchisee 30% ✕ INSOSTENIBILE</div>
+          <div class="margin-bar" style="opacity:0.5;">
+            <div class="mb-seg" style="flex:40;background:rgba(255,255,255,0.08);"><span style="color:rgba(255,255,255,0.5);">Costo AU<br>40%</span></div>
+            <div class="mb-seg" style="flex:30;background:rgba(255,255,255,0.4);"><span style="color:var(--au-blue);">HQ 30%</span></div>
+            <div class="mb-seg" style="flex:30;border:1px dashed rgba(255,255,255,0.4);background:transparent;"><span style="color:rgba(255,255,255,0.5);">30% ✕<br>IN PERDITA</span></div>
+          </div>
+        </div>
+
+        <div class="fi" data-delay="4" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:22px 24px;">
+          <div style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.5);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;">Perché il 30% è insostenibile — i numeri</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+            <div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.12);"><div style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);">Gross profit @30% su €200k</div><div style="font-family:'Bebas Neue',cursive;font-size:28px;color:#fff;">€60.000</div></div>
+            <div style="padding:10px 0 10px 20px;border-bottom:1px solid rgba(255,255,255,0.12);"><div style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);">OPEX fissi minimi</div><div style="font-family:'Bebas Neue',cursive;font-size:28px;color:#fff;">€95.000</div></div>
+            <div style="padding:10px 0;"><div style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);">Royalty 5% + Mktg 1%</div><div style="font-family:'Bebas Neue',cursive;font-size:28px;color:#fff;">€12.000</div></div>
+            <div style="padding:10px 0 0 20px;"><div style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);">EBITDA franchisee</div><div style="font-family:'Bebas Neue',cursive;font-size:28px;color:var(--au-red);">−€47.000</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="fi" data-delay="2" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:24px;margin-bottom:20px;">
+          <div style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.65);letter-spacing:.16em;text-transform:uppercase;margin-bottom:16px;">Soglia minima per EBITDA sano (12%) — per scenari di fatturato</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:12px;">Margine franchisee necessario per raggiungere EBITDA ≥ 12%</div>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead><tr><th style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.6);text-align:left;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);">Fatturato</th><th style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.6);text-align:right;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);">Margine min.</th><th style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.6);text-align:right;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.2);">Status</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fff;padding:10px 0;">€150.000</td><td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--au-red);text-align:right;padding:10px 0;">~72%</td><td style="font-family:'DM Sans',sans-serif;font-size:11px;color:var(--au-red);text-align:right;">IMPOSSIBILE</td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fff;padding:10px 0;">€200.000</td><td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(249,115,22,1);text-align:right;padding:10px 0;">~57%</td><td style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(249,115,22,1);text-align:right;">DIFFICILE</td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.06);"><td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fff;padding:10px 0;">€250.000</td><td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(255,255,255,0.8);text-align:right;padding:10px 0;">~49%</td><td style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.6);text-align:right;">RAGGIUNGIBILE</td></tr>
+              <tr><td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fff;padding:10px 0;">€300.000</td><td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#fff;text-align:right;padding:10px 0;">~45%</td><td style="font-family:'DM Sans',sans-serif;font-size:11px;color:#fff;text-align:right;">✓ TARGET</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="fi" data-delay="3" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-left:3px solid rgba(255,255,255,0.5);border-radius:0 4px 4px 0;padding:22px 24px;">
+          <div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:#fff;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">La conclusione matematica</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">
+            Per un franchisee con OPEX fissi di €95k e royalty al 5%, il margine lordo minimo sostenibile si attesta tra il <strong style="color:#fff;">48% e il 55%</strong>. Il modello iniziale al 30% non è una scelta conservativa: è matematicamente insostenibile a qualsiasi volume di fatturato realisticamente raggiungibile. Servono 3 ipotesi concrete da deliberare.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AU.04 — LE 3 IPOTESI ═════════════════════════════════════════════ -->
+<section id="au-ipotesi" class="au-section">
+  <div class="au-wrap">
+    <div class="au-sh fi"><span class="n">AU·04</span><div class="line"></div><span class="lbl">Le 3 Ipotesi Strategiche</span></div>
+    <div class="ci">
+      <h2 class="au-dt au-dt-lg">TRE MODELLI.<br>UNA <span style="color:var(--au-blue);">SOLA</span><br>DELIBERA.</h2>
+    </div>
+    <p class="fi" data-delay="1" style="font-size:15px;color:var(--au-muted);line-height:1.85;font-weight:300;max-width:680px;margin-bottom:48px;">
+      Ogni ipotesi distribuisce diversamente i 60 punti di margine disponibili. Nessuna è "giusta" in assoluto: dipende dalla priorità strategica che i soci scelgono — sostenibilità affiliato, ricavo HQ immediato o velocità di espansione rete.
+    </p>
+
+    <!-- 3 Hypothesis cards -->
+    <div class="grid3 fi" data-delay="2" style="margin-bottom:48px;align-items:stretch;">
+      <!-- A -->
+      <div class="hypo-card" style="border-color:rgba(46,83,161,0.3);background:rgba(46,83,161,0.04);">
+        <div class="hc-badge" style="color:var(--au-blue);background:rgba(46,83,161,0.1);border:1px solid rgba(46,83,161,0.25);">★ CONSIGLIATA</div>
+        <div class="hc-id" style="color:var(--au-blue);">IPOTESI A</div>
+        <div class="hc-sub">Equilibrata — Il punto di convergenza</div>
+        <div class="hc-row" style="border-color:rgba(46,83,161,0.12);"><span class="hc-lbl">Margine Franchisee</span><span class="hc-val" style="color:var(--au-blue);">50%</span></div>
+        <div class="hc-row" style="border-color:rgba(46,83,161,0.12);"><span class="hc-lbl">Royalty</span><span class="hc-val" style="color:var(--au-blue);">5%</span></div>
+        <div class="hc-row" style="border-color:rgba(46,83,161,0.12);"><span class="hc-lbl">Marketing fee</span><span class="hc-val" style="color:var(--au-blue);">1%</span></div>
+        <div class="hc-row" style="border-color:rgba(46,83,161,0.12);"><span class="hc-lbl">EBITDA @€250k</span><span class="hc-val" style="color:var(--au-blue);">~6%</span></div>
+        <div class="hc-row" style="border-color:rgba(46,83,161,0.12);"><span class="hc-lbl">EBITDA @€300k</span><span class="hc-val" style="color:var(--au-blue);">~12%</span></div>
+        <div class="hc-row" style="border-color:rgba(46,83,161,0.12);"><span class="hc-lbl">Ricavo HQ @€200k</span><span class="hc-val" style="color:var(--au-blue);">€32.000</span></div>
+        <div class="hc-note" style="border-color:rgba(46,83,161,0.12);">HQ guadagna 10% spread + 5% royalty + 1% mktg = 16% del fatturato affiliato. Break-even HQ a 5 store con spread incluso, a 10 con sola royalty. Payback CAPEX ~18 mesi a €300k.</div>
+      </div>
+      <!-- B -->
+      <div class="hypo-card" style="border-color:rgba(205,32,26,0.25);background:rgba(205,32,26,0.03);">
+        <div class="hc-badge" style="color:var(--au-red);background:rgba(205,32,26,0.08);border:1px solid rgba(205,32,26,0.2);">⚠ RISCHIO ALTO</div>
+        <div class="hc-id" style="color:var(--au-red);">IPOTESI B</div>
+        <div class="hc-sub">Supply-Focused — Margine basso, zero royalty</div>
+        <div class="hc-row" style="border-color:rgba(205,32,26,0.1);"><span class="hc-lbl">Margine Franchisee</span><span class="hc-val" style="color:var(--au-red);">40%</span></div>
+        <div class="hc-row" style="border-color:rgba(205,32,26,0.1);"><span class="hc-lbl">Royalty</span><span class="hc-val" style="color:var(--au-red);">0%</span></div>
+        <div class="hc-row" style="border-color:rgba(205,32,26,0.1);"><span class="hc-lbl">Marketing fee</span><span class="hc-val" style="color:var(--au-red);">0%</span></div>
+        <div class="hc-row" style="border-color:rgba(205,32,26,0.1);"><span class="hc-lbl">EBITDA @€250k</span><span class="hc-val" style="color:var(--au-red);">~2%</span></div>
+        <div class="hc-row" style="border-color:rgba(205,32,26,0.1);"><span class="hc-lbl">EBITDA @€300k</span><span class="hc-val" style="color:var(--au-red);">~8%</span></div>
+        <div class="hc-row" style="border-color:rgba(205,32,26,0.1);"><span class="hc-lbl">Ricavo HQ @€200k</span><span class="hc-val" style="color:var(--au-red);">€40.000</span></div>
+        <div class="hc-note" style="border-color:rgba(205,32,26,0.1);color:var(--au-muted);">Margine basso (40%) non compensa l'assenza di royalty. Il franchisee non raggiunge mai il benchmark 12% e rischia la chiusura. Alta probabilità di insoddisfazione e abbandono della rete. <strong style="color:var(--au-red);">Rischio legale: markup nascosto = abuso ex L.192/1998.</strong></div>
+      </div>
+      <!-- C -->
+      <div class="hypo-card" style="border-color:rgba(45,156,110,0.3);background:rgba(45,156,110,0.03);">
+        <div class="hc-badge" style="color:#2D9C6E;background:rgba(45,156,110,0.08);border:1px solid rgba(45,156,110,0.2);">↗ AGGRESSIVA</div>
+        <div class="hc-id" style="color:#2D9C6E;">IPOTESI C</div>
+        <div class="hc-sub">Volume-first — Attrae affiliati, abbassa utile merce</div>
+        <div class="hc-row" style="border-color:rgba(45,156,110,0.12);"><span class="hc-lbl">Margine Franchisee</span><span class="hc-val" style="color:#2D9C6E;">55%</span></div>
+        <div class="hc-row" style="border-color:rgba(45,156,110,0.12);"><span class="hc-lbl">Royalty</span><span class="hc-val" style="color:#2D9C6E;">6%</span></div>
+        <div class="hc-row" style="border-color:rgba(45,156,110,0.12);"><span class="hc-lbl">Marketing fee</span><span class="hc-val" style="color:#2D9C6E;">2%</span></div>
+        <div class="hc-row" style="border-color:rgba(45,156,110,0.12);"><span class="hc-lbl">EBITDA @€250k</span><span class="hc-val" style="color:#2D9C6E;">~9%</span></div>
+        <div class="hc-row" style="border-color:rgba(45,156,110,0.12);"><span class="hc-lbl">EBITDA @€300k</span><span class="hc-val" style="color:#2D9C6E;">~15%</span></div>
+        <div class="hc-row" style="border-color:rgba(45,156,110,0.12);"><span class="hc-lbl">Ricavo HQ @€200k</span><span class="hc-val" style="color:#2D9C6E;">€26.000</span></div>
+        <div class="hc-note" style="border-color:rgba(45,156,110,0.12);">Il franchisee è felice a regime (15% EBITDA a €300k). HQ guadagna meno per store ma attrae più affiliati velocemente. Scommessa sulla velocità di espansione — richiede più store attivi per coprire i costi fissi HQ.</div>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <div class="au-box fi" data-delay="3">
+      <div class="bh"><span class="au-lbl blue">Confronto ricavo American Uncle per store @€200k fatturato</span></div>
+      <table>
+        <thead><tr><th>Voce di ricavo HQ</th><th>Ipotesi A</th><th>Ipotesi B</th><th>Ipotesi C</th></tr></thead>
+        <tbody>
+          <tr><td>Spread merce (markup AU)</td><td>€20.000 (10%)</td><td>€40.000 (20%)</td><td>€10.000 (5%)</td></tr>
+          <tr><td>Royalty</td><td>€10.000 (5%)</td><td>€0 (0%)</td><td>€12.000 (6%)</td></tr>
+          <tr><td>Contributo marketing</td><td>€2.000 (1%)</td><td>€0 (0%)</td><td>€4.000 (2%)</td></tr>
+          <tr class="hl"><td>Totale ricavo HQ</td><td>€32.000</td><td>€40.000</td><td>€26.000</td></tr>
+          <tr><td>% del fatturato affiliato</td><td>16%</td><td>20%</td><td>13%</td></tr>
+          <tr><td>Break-even HQ (solo royalty, CF €95k)</td><td>10 store</td><td>N/A (royalty=0)</td><td>8 store</td></tr>
+          <tr class="hl"><td>Break-even HQ (con spread incluso)</td><td>3 store</td><td>3 store</td><td>4 store</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AU.05 — HQ & BREAK-EVEN ══════════════════════════════════════════ -->
+<section id="au-hq" class="au-section au-raise">
+  <div class="au-wrap">
+    <div class="au-sh fi"><span class="n">AU·05</span><div class="line"></div><span class="lbl">Struttura HQ & Break-Even Analysis</span></div>
+    <div class="g2">
+      <div>
+        <div class="ci">
+          <h2 class="au-dt au-dt-lg">QUANTO<br>COSTA<br><span style="color:var(--au-blue);">ESSERE</span><br>LA CASA<br>MADRE.</h2>
+        </div>
+        <p class="fi" data-delay="1" style="font-size:14px;color:var(--au-muted);line-height:1.85;font-weight:300;margin-bottom:28px;">
+          I costi fissi HQ sono dovuti ogni giorno a prescindere da quanti store sono aperti. Questa è la cifra che la Casa Madre deve sostenere per "esistere" professionalmente sul mercato e supportare la rete.
+        </p>
+        <div class="au-box fi" data-delay="2" style="margin-bottom:20px;">
+          <div class="bh"><span class="au-lbl blue">Struttura costi fissi HQ — Baseline annua</span></div>
+          <table>
+            <thead><tr><th>Categoria</th><th>Dettaglio</th><th>Importo/anno</th></tr></thead>
+            <tbody>
+              <tr class="hl"><td>👤 Area Manager</td><td>RAL €40k + oneri €14.923 + trasferte €13.693</td><td>€68.616</td></tr>
+              <tr><td>💻 Software & IT</td><td>CRM, server ERP, Business Intelligence, Odoo</td><td>€3.500</td></tr>
+              <tr class="hl"><td>📣 Marketing HQ</td><td>Retainer agenzia €7.200 + advertising B2B €7.800</td><td>€15.000</td></tr>
+              <tr><td>⚖️ Legale & Compliance</td><td>Ammortamento contratti, manuali, aggiornamenti</td><td>€4.000</td></tr>
+              <tr><td>🏢 Ufficio & Overhead</td><td>Postazioni, software secondari, utenze sede</td><td>€3.884</td></tr>
+              <tr class="hl"><td>★ TOTALE COSTI FISSI HQ</td><td>Fabbisogno minimo annuo per operare</td><td>€95.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="au-card red fi" data-delay="3">
+          <div class="ct">⚠ Step-cost al 16°–21° store</div>
+          <div class="cb">Un solo Area Manager può gestire fisicamente al massimo 15–20 store. Alla 16°–21° apertura è obbligatorio inserire un secondo Area Manager (+€65.000/anno). I costi HQ salgono a €160.000 — innescando un nuovo ciclo di break-even che richiede ulteriori store per essere coperto.</div>
+        </div>
+      </div>
+      <div>
+        <div class="au-strip fi" data-delay="1" style="margin-bottom:20px;">
+          <span class="au-lbl" style="display:block;margin-bottom:20px;">Break-even HQ — scenari chiave</span>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="padding:18px 0;border-bottom:1px solid var(--au-rule);">
+              <span class="au-lbl blue">Con spread incluso — Ipotesi A @€200k/store</span>
+              <div style="font-family:'Bebas Neue',cursive;font-size:56px;color:var(--au-blue);line-height:.9;margin-top:4px;">3 STORE</div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--au-muted);margin-top:6px;">Con €32k/store (spread+royalty+mktg) → €95k/32k = 2,97 store</div>
+            </div>
+            <div style="padding:18px 0;border-bottom:1px solid var(--au-rule);">
+              <span class="au-lbl" style="color:rgba(18,18,18,0.35);">Solo royalty 5% @€200k fatturato medio</span>
+              <div style="font-family:'Bebas Neue',cursive;font-size:56px;color:var(--au-text);line-height:.9;margin-top:4px;">10 STORE</div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--au-muted);margin-top:6px;">Con €10k/store (solo royalty) → €95k/10k = 9,5 → arrotondato 10</div>
+            </div>
+            <div style="padding:18px 0;border-bottom:1px solid var(--au-rule);">
+              <span class="au-lbl" style="color:rgba(205,32,26,0.5);">Se fatturato medio scende a €150k</span>
+              <div style="font-family:'Bebas Neue',cursive;font-size:56px;color:var(--au-red);line-height:.9;margin-top:4px;">13 STORE</div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--au-muted);margin-top:6px;">Con €7.500/store (royalty 5% su €150k) → €95k/7,5k = 12,6 → 13 store</div>
+            </div>
+            <div style="padding:18px 0;">
+              <span class="au-lbl" style="color:rgba(18,18,18,0.35);">Limite capienza Area Manager singolo</span>
+              <div style="font-family:'Bebas Neue',cursive;font-size:56px;color:var(--au-muted);line-height:.9;margin-top:4px;">15–20</div>
+              <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--au-muted);margin-top:6px;">Oltre questo numero scatta il secondo Area Manager (+€65k/anno → CF diventa €160k)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network projection table -->
+    <div class="au-box fi" data-delay="3" style="margin-top:40px;">
+      <div class="bh"><span class="au-lbl blue">Proiezione EBITDA HQ al crescere della rete — Ipotesi A (@€200k fatturato/store)</span></div>
+      <table>
+        <thead><tr><th>Store attivi</th><th>Ricavi HQ totali</th><th>Costi fissi HQ</th><th>EBITDA HQ</th><th>EBITDA %</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="red-hl"><td>1</td><td>€32.000</td><td>€95.000</td><td>−€63.000</td><td>—</td><td>IN PERDITA</td></tr>
+          <tr class="red-hl"><td>3</td><td>€96.000</td><td>€95.000</td><td>+€1.000</td><td>1%</td><td>BREAK-EVEN</td></tr>
+          <tr><td>5</td><td>€160.000</td><td>€95.000</td><td>+€65.000</td><td>41%</td><td>POSITIVO</td></tr>
+          <tr class="hl"><td>10</td><td>€320.000</td><td>€95.000</td><td>+€225.000</td><td>70%</td><td>OTTIMO ★</td></tr>
+          <tr><td>15</td><td>€480.000</td><td>€95.000</td><td>+€385.000</td><td>80%</td><td>ECCELLENTE</td></tr>
+          <tr class="red-hl"><td>16–21</td><td>€512k–€672k</td><td>€160.000</td><td>variabile</td><td>—</td><td>⚠ STEP-COST</td></tr>
+          <tr class="hl"><td>20</td><td>€640.000</td><td>€160.000</td><td>+€480.000</td><td>75%</td><td>ECCELLENTE</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AU.06 — ROADMAP ══════════════════════════════════════════════════ -->
+<section id="au-roadmap" class="au-section" style="background:var(--au-ink);">
+  <div class="au-wrap">
+    <div class="au-sh inv fi"><span class="n">AU·06</span><div class="line"></div><span class="lbl">La Roadmap — Da Oggi ai Primi 10 Store</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-bottom:64px;">
+      <div>
+        <div class="ci">
+          <h2 class="au-dt au-dt-lg au-dt-inv">IL PIANO<br>ESISTE.<br><span style="color:var(--au-blue);">MANCA</span><br>LA FIRMA.</h2>
+        </div>
+        <p class="fi" data-delay="1" style="font-size:15px;color:rgba(255,255,255,0.4);line-height:1.85;font-weight:300;">
+          Ogni fase ha un output misurabile e una responsabilità chiara. La variabile dipendente da cui tutto discende è la delibera sul modello economico che avviene <strong style="color:#fff;">oggi in questa sala</strong>.
+        </p>
+      </div>
+      <div class="fi" data-delay="2" style="padding-top:8px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:24px;">
+          <div style="padding-right:20px;border-right:1px solid rgba(255,255,255,0.08);">
+            <span style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px;">Store per HQ break-even</span>
+            <div style="font-family:'Bebas Neue',cursive;font-size:44px;color:var(--au-blue);line-height:1;">3</div>
+          </div>
+          <div style="padding-left:20px;">
+            <span style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px;">Fee affiliazione</span>
+            <div style="font-family:'Bebas Neue',cursive;font-size:44px;color:var(--au-blue);line-height:1;">€8–10k</div>
+          </div>
+          <div style="padding-right:20px;padding-top:16px;margin-top:16px;border-right:1px solid rgba(255,255,255,0.08);border-top:1px solid rgba(255,255,255,0.08);">
+            <span style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px;">Payback CAPEX @€300k</span>
+            <div style="font-family:'Bebas Neue',cursive;font-size:44px;color:var(--au-blue);line-height:1;">18m</div>
+          </div>
+          <div style="padding-left:20px;padding-top:16px;margin-top:16px;border-top:1px solid rgba(255,255,255,0.08);">
+            <span style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px;">EBITDA HQ a 10 store</span>
+            <div style="font-family:'Bebas Neue',cursive;font-size:44px;color:var(--au-blue);line-height:1;">€225k</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roadmap timeline -->
+    <div class="roadmap fi" data-delay="2" style="margin-bottom:64px;">
+      <div class="rm-item">
+        <div class="rm-dot" style="background:rgba(205,32,26,0.15);border-color:var(--au-red);color:var(--au-red);">→</div>
+        <div class="rm-phase" style="color:var(--au-red);">FASE 0</div>
+        <div class="rm-title" style="color:#fff;">Delibera</div>
+        <div class="rm-time">Oggi — in questa sala</div>
+        <ul class="rm-items">
+          <li><span>Votazione modello A / B / C</span></li>
+          <li><span>Blocco fee affiliazione e royalty</span></li>
+          <li><span>Go/No-go franchising</span></li>
+          <li><span>Budget working capital HQ</span></li>
+        </ul>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot" style="background:rgba(46,83,161,0.15);border-color:var(--au-blue);color:var(--au-blue);">1</div>
+        <div class="rm-phase" style="color:var(--au-blue);">FASE 1</div>
+        <div class="rm-title" style="color:#fff;">Infrastruttura</div>
+        <div class="rm-time">Q2–Q3 2026</div>
+        <ul class="rm-items">
+          <li><span>Contratto affiliazione</span></li>
+          <li><span>Manuale operativo</span></li>
+          <li><span>Brand manual + kit marketing</span></li>
+          <li><span>Gestionale Odoo setup</span></li>
+          <li><span>Disclosure document</span></li>
+        </ul>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.4);color:rgba(255,255,255,0.6);">2</div>
+        <div class="rm-phase" style="color:rgba(255,255,255,0.5);">FASE 2</div>
+        <div class="rm-title" style="color:#fff;">Primi affiliati</div>
+        <div class="rm-time">Q4 2026</div>
+        <ul class="rm-items">
+          <li><span>Lead generation attiva</span></li>
+          <li><span>3 candidati qualificati</span></li>
+          <li><span>Validazione location AU</span></li>
+          <li><span>Firma 2–3 contratti</span></li>
+          <li><span>Opening kit completo</span></li>
+        </ul>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.5);">3</div>
+        <div class="rm-phase" style="color:rgba(255,255,255,0.5);">FASE 3</div>
+        <div class="rm-title" style="color:rgba(255,255,255,0.7);">Rete a regime</div>
+        <div class="rm-time">2027</div>
+        <ul class="rm-items">
+          <li><span>5 store → HQ break-even</span></li>
+          <li><span>KPI dashboard live</span></li>
+          <li><span>10 store obiettivo</span></li>
+          <li><span>2° Area Manager</span></li>
+          <li><span>Valutazione master franchise</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="fi" data-delay="3" style="background:var(--au-blue);border-radius:4px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+      <div>
+        <div style="font-family:'Bebas Neue',cursive;font-size:clamp(36px,5vw,60px);color:#fff;line-height:.9;margin-bottom:16px;">PRONTI A<br>DELIBERARE.</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:14px;color:rgba(255,255,255,0.55);line-height:1.8;">Il brand è costruito. Il format è validato dal pilota. Il mercato è aperto. La rete aspetta solo che questa sala si alzi con un voto.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Prossimi step operativi</div>
+        <div style="padding:12px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,255,255,0.7);">01 — Votazione modello economico A/B/C</div>
+        <div style="padding:12px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,255,255,0.55);">02 — Mandato a avvocato per contratto</div>
+        <div style="padding:12px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,255,255,0.45);">03 — Redazione manuale operativo</div>
+        <div style="padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,255,255,0.5);">04 — Attivazione campagna lead gen</div>
+      </div>
+    </div>
+
+    <div style="margin-top:56px;padding-top:36px;border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;">
+      <img src="https://americanuncle.it/cdn/shop/files/logo-american-uncle-nuovo.png" alt="American Uncle" style="height:22px;filter:brightness(0) invert(1);opacity:.3;" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <span style="font-family:'Bebas Neue',cursive;font-size:18px;color:#fff;opacity:.3;display:none;">AMERICAN UNCLE</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:.12em;text-transform:uppercase;">Documento Interno Riservato · Aprile 2026</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
